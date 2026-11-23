@@ -112,6 +112,13 @@ tr.ded td{color:#9aa7a4}
 .gal figcaption a{font-size:13px;color:var(--teal);font-weight:600;white-space:nowrap;text-decoration:none}
 @media(max-width:900px){.gal{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:500px){.gal{grid-template-columns:1fr}}
+.vid{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:16px;align-items:start;margin-top:10px}
+.vid video{width:100%;max-height:520px;border-radius:12px;background:#000;display:block}
+.vids{display:grid;grid-template-columns:repeat(2,minmax(0,320px));gap:16px;margin-top:14px}
+.vids figure{margin:0;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px}
+.vids video{width:100%;border-radius:10px;background:#000;display:block}
+.vids figcaption{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 4px 2px;font-weight:600}
+@media(max-width:600px){.vid{grid-template-columns:1fr}.vids{grid-template-columns:1fr}}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:var(--deep);color:#fff;padding:10px 18px;border-radius:999px;font-weight:600;transition:.25s;z-index:60;max-width:90vw;text-align:center}
 .toast.on{transform:translateX(-50%) translateY(0)}
 #gate{position:fixed;inset:0;background:var(--deep);z-index:80;display:grid;place-items:center;padding:20px}
@@ -177,6 +184,10 @@ tr.ded td{color:#9aa7a4}
   </section>
   <section id="tab-tq" hidden>
     <div class="panel"><h2>Ảnh tổng quan dự án</h2><div style="font-size:13px;color:var(--mute);margin-top:4px">Ảnh phối cảnh chính thức của CĐT. Bấm ảnh để xem lớn, bấm "Lưu ảnh" để tải về gửi khách.</div></div>
+    <div class="panel sec"><h2>Video căn hộ mẫu</h2><div class="vids">
+      <figure><video src="/video/can-mau-studio.mp4" poster="/video/can-mau-studio.jpg" controls playsinline preload="none"></video><figcaption><span>Căn mẫu Studio · 52s</span><button type="button" class="btn b-gold" data-sv="studio">⬇ Lưu</button></figcaption></figure>
+      <figure><video src="/video/can-mau-2pn.mp4" poster="/video/can-mau-2pn.jpg" controls playsinline preload="none"></video><figcaption><span>Căn mẫu 2 phòng ngủ · 25s</span><button type="button" class="btn b-gold" data-sv="2pn">⬇ Lưu</button></figcaption></figure>
+    </div></div>
     <div class="gal" id="gal"></div>
   </section>
 </main>
@@ -281,6 +292,7 @@ function calc(){
    </div>
   </div>
   <div class="panel sec"><h3 style="font-size:16px">Vị trí căn</h3>${locHtml(u)}</div>
+  ${vidHtml(u)}
   <div class="panel inv sec" id="inv"></div>`;
   document.querySelectorAll('.meth').forEach(b=>b.onclick=()=>{mid=b.dataset.m;calc()});
   $('#img').onclick=async e=>{const b=e.currentTarget;b.disabled=true;b.textContent='Đang tạo ảnh…';try{await PB_IMG.save(u,p,rows,T[ME]||T.hoang,toast)}finally{b.disabled=false;b.textContent='📷 Lưu ảnh báo giá gửi khách'}};
@@ -292,6 +304,18 @@ const PLAN={M:'plan_M_typical',P:'plan_P_typical'};
 function locHtml(u){const L=u.loc;const plan=u.t==='P'&&u.f==='05'?'plan_P_floor5':PLAN[u.t];
  return `<div class="loc">${L?`<figure><div class="pin"><img src="/img/chican/${L[2]}.webp" alt="Vị trí căn ${u.c} trên phối cảnh"><i class="dot" style="left:${L[0]*100}%;top:${L[1]*100}%"></i></div><figcaption>Chấm đỏ: vị trí tương đối của căn ${u.c} (tầng ${u.f}) trên phối cảnh.</figcaption></figure>`:''}
  <figure><a href="/img/chican/${plan}.webp" target="_blank" rel="noopener"><img src="/img/chican/${plan}.webp" alt="Mặt bằng tòa ${u.t}" loading="lazy"></a><figcaption>Mặt bằng ${u.t==='P'&&u.f==='05'?'tầng 5':'tầng điển hình'} tòa ${u.t}: tìm nhãn ${u.c.replace(/-\w+-/,'-'+(u.t==='P'&&u.f==='05'?'05':'xx')+'-')} trên mặt bằng. Bấm để phóng to.</figcaption></figure></div>`}
+const VIDS={studio:['Studio','/video/can-mau-studio.mp4','/video/can-mau-studio.jpg','52 giây'],'2pn':['2 phòng ngủ','/video/can-mau-2pn.mp4','/video/can-mau-2pn.jpg','25 giây']};
+const vidKey=k=>k==='2PN'?'2pn':(k==='Studio'||k==='Studio+')?'studio':null;
+async function saveVid(key,btn){const v=VIDS[key];const old=btn.textContent;btn.disabled=true;btn.textContent='Đang tải video…';
+ try{const blob=await (await fetch(v[1])).blob();const name='prima-bay-can-mau-'+key+'.mp4';const file=new File([blob],name,{type:'video/mp4'});
+  if(navigator.canShare&&navigator.canShare({files:[file]})&&/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)){try{await navigator.share({files:[file],title:'Video căn mẫu '+v[0]+' Prima Bay'})}catch(e){}}
+  else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();toast('Đã lưu video '+name)}}
+ catch(e){toast('Không tải được video, thử lại')}finally{btn.disabled=false;btn.textContent=old}}
+function vidHtml(u){const k=vidKey(u.k);if(!k)return '';const v=VIDS[k];
+ return `<div class="panel sec"><h3 style="font-size:16px">Video căn hộ mẫu ${v[0]}</h3><div class="vid"><video src="${v[1]}" poster="${v[2]}" controls playsinline preload="none"></video>
+  <div><div style="font-size:14px;color:var(--mute)">Video thực tế căn mẫu ${v[0]} (${v[3]}). Bấm lưu để gửi thẳng cho khách qua Zalo.</div>
+  <div class="acts"><button type="button" class="btn b-gold" data-sv="${k}">⬇ Lưu video gửi khách</button></div></div></div></div>`}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-sv]');if(b)saveVid(b.dataset.sv,b)});
 function summary(u,p,rows){const m=T[ME]||T.hoang;
   return `PRIMA BAY HẠ LONG - BÁO GIÁ CĂN ${u.c}\n${u.k} · Tòa ${u.t} · Tầng ${u.f} · ${u.a} m² · View ${u.v||'-'}\nGiá niêm yết: ${F.vnd(u.p)} đ (gồm VAT)\nPhương thức: ${p.m.name}${p.rf?' + giới thiệu 2%':''}\nTổng giá trị HĐ: ${F.vnd(p.total)} đ (đã gồm VAT + bảo trì)\n\nLịch thanh toán:\n${rows.filter(r=>!r.ded).map(r=>`- ${r.n}: ${F.vnd(r.amt)} đ${r.date?' ('+F.date(r.date)+')':' (theo thông báo)'}`).join('\n')}\n\nXem chi tiết: ${qlink(u,p)}\nTư vấn: ${m.name} - ${F.phone(m.phone)}`}
 function qlink(u,p){const q=new URLSearchParams({c:u.c,m:p.m.id});if(p.rf)q.set('r','1');q.set('d',$('#d0').value||new Date().toISOString().slice(0,10));if(ttdc()!==1e8)q.set('tt',ttdc()/1e6);if(ME&&ME!=='hoang')q.set('ns',ME);return location.origin+'/bao-gia/?'+q}
