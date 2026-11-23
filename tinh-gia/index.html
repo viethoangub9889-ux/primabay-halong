@@ -96,6 +96,7 @@ tr.ded td{color:#9aa7a4}
 .loc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:14px;margin-top:10px}
 .loc figure{margin:0;position:relative;border-radius:12px;overflow:hidden;background:#e9eeec}
 .loc figure img{display:block;width:100%;height:auto}
+.pin{position:relative;line-height:0}
 .loc figcaption{font-size:12px;color:var(--mute);padding:6px 2px}
 .dot{position:absolute;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:#e0261b;border:2px solid #fff;box-shadow:0 0 0 2px #e0261b}
 .dot::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:2px solid #e0261b;animation:pulse 1.6s ease-out infinite}
@@ -289,7 +290,7 @@ function calc(){
 }
 const PLAN={M:'plan_M_typical',P:'plan_P_typical'};
 function locHtml(u){const L=u.loc;const plan=u.t==='P'&&u.f==='05'?'plan_P_floor5':PLAN[u.t];
- return `<div class="loc">${L?`<figure><img src="/img/chican/${L[2]}.webp" alt="Vị trí căn ${u.c} trên phối cảnh"><i class="dot" style="left:${L[0]*100}%;top:${L[1]*100}%"></i><figcaption>Chấm đỏ: vị trí tương đối của căn ${u.c} (tầng ${u.f}) trên phối cảnh.</figcaption></figure>`:''}
+ return `<div class="loc">${L?`<figure><div class="pin"><img src="/img/chican/${L[2]}.webp" alt="Vị trí căn ${u.c} trên phối cảnh"><i class="dot" style="left:${L[0]*100}%;top:${L[1]*100}%"></i></div><figcaption>Chấm đỏ: vị trí tương đối của căn ${u.c} (tầng ${u.f}) trên phối cảnh.</figcaption></figure>`:''}
  <figure><a href="/img/chican/${plan}.webp" target="_blank" rel="noopener"><img src="/img/chican/${plan}.webp" alt="Mặt bằng tòa ${u.t}" loading="lazy"></a><figcaption>Mặt bằng ${u.t==='P'&&u.f==='05'?'tầng 5':'tầng điển hình'} tòa ${u.t}: tìm nhãn ${u.c.replace(/-\w+-/,'-'+(u.t==='P'&&u.f==='05'?'05':'xx')+'-')} trên mặt bằng. Bấm để phóng to.</figcaption></figure></div>`}
 function summary(u,p,rows){const m=T[ME]||T.hoang;
   return `PRIMA BAY HẠ LONG - BÁO GIÁ CĂN ${u.c}\n${u.k} · Tòa ${u.t} · Tầng ${u.f} · ${u.a} m² · View ${u.v||'-'}\nGiá niêm yết: ${F.vnd(u.p)} đ (gồm VAT)\nPhương thức: ${p.m.name}${p.rf?' + giới thiệu 2%':''}\nTổng giá trị HĐ: ${F.vnd(p.total)} đ (đã gồm VAT + bảo trì)\n\nLịch thanh toán:\n${rows.filter(r=>!r.ded).map(r=>`- ${r.n}: ${F.vnd(r.amt)} đ${r.date?' ('+F.date(r.date)+')':' (theo thông báo)'}`).join('\n')}\n\nXem chi tiết: ${qlink(u,p)}\nTư vấn: ${m.name} - ${F.phone(m.phone)}`}
