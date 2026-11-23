@@ -9,7 +9,9 @@ async function render(u,p,rows,adv){
   await (document.fonts&&document.fonts.ready);
   const W=1080,P=56,IW=W-P*2;
   const shown=rows;
-  const H=360+350+(u.loc?440:0)+150+ (p.ck?1:0)*52+(p.rf?1:0)*52+7*52+40 + 90+shown.length*84+70 +230;
+  const yrs={};let tbg=0;for(const r of rows){if(!r.amt||r.ded)continue;if(r.date){const k=r.date.getFullYear();yrs[k]=(yrs[k]||0)+r.amt}else tbg+=r.amt}
+  const yl=Object.keys(yrs).sort().map(k=>['Năm '+k,yrs[k]]);if(tbg)yl.push(['Khi bàn giao / cấp sổ',tbg,1]);
+  const H=360+350+(u.loc?440:0)+150+ (p.ck?1:0)*52+(p.rf?1:0)*52+7*52+40 + 90+shown.length*84+70 +(116+(yl.length+1)*56+62)+235;
   const cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext('2d');
   x.fillStyle=C.bg;x.fillRect(0,0,W,H);
   // header
@@ -59,13 +61,25 @@ async function render(u,p,rows,adv){
     x.font=`400 21px ${FONT}`;x.fillStyle=C.mute;const note=(r.pct?r.pct+' · ':'')+r.note;x.fillText(wrap(x,note,IW-48)[0],P+24,y+30);y+=40;
   }
   y+=60;
+  // totals per year
+  card(116+(yl.length+1)*56+(tbg?22:0));
+  y+=58;x.fillStyle=C.ink;x.font=`700 32px ${FONT}`;x.fillText('Tổng tiền thanh toán theo năm',P+24,y);
+  x.textAlign='right';x.fillStyle=C.mute;x.font=`500 21px ${FONT}`;x.fillText('LŨY KẾ',W-P-24,y);x.fillText('SỐ TIỀN',W-P-260,y);x.textAlign='left';y+=58;
+  let cum=0;for(const [l,v,bg] of yl){cum+=v;
+    x.font=`600 28px ${FONT}`;x.fillStyle=C.ink;x.fillText(l,P+24,y);
+    x.font=`400 20px ${FONT}`;x.fillStyle=C.mute;if(bg)x.fillText('theo thông báo CĐT',P+24,y+24);
+    x.textAlign='right';x.font=`600 28px ${FONT}`;x.fillStyle=C.ink;x.fillText(F.vnd(v),W-P-260,y);
+    x.font=`400 26px ${FONT}`;x.fillStyle=C.mute;x.fillText(F.vnd(cum),W-P-24,y);x.textAlign='left';y+=bg?78:56}
+  x.strokeStyle=C.line;x.lineWidth=1.5;x.beginPath();x.moveTo(P+24,y-30);x.lineTo(W-P-24,y-30);x.stroke();
+  x.font=`700 30px ${FONT}`;x.fillStyle=C.teal;x.fillText('Tổng cộng',P+24,y+4);x.textAlign='right';x.fillText(F.vnd(cum)+' đ',W-P-24,y+4);x.textAlign='left';
+  y+=82;
   // advisor
   x.fillStyle=C.deep;x.fillRect(0,y,W,H-y);
   let ax=P;if(adv.img){const im=await load(adv.img);if(im){x.save();x.beginPath();x.roundRect(P,y+36,120,150,16);x.clip();const s=Math.max(120/im.width,150/im.height);x.drawImage(im,P+60-im.width*s/2,y+36,im.width*s,im.height*s);x.restore();ax=P+150}}
   x.fillStyle=C.goldl;x.font=`600 24px ${FONT}`;x.fillText('CHUYÊN VIÊN TƯ VẤN',ax,y+66);
   x.fillStyle='#fff';x.font=`500 44px ${SERIF}`;x.fillText(adv.name,ax,y+120);
   x.fillStyle='#fff';x.font=`700 34px ${FONT}`;x.fillText('☎ '+F.phone(adv.phone)+'  ·  Zalo',ax,y+170);
-  x.fillStyle='#9fb7b3';x.font=`400 19px ${FONT}`;x.fillText('Phiếu tạm tính theo chính sách bán hàng hiện hành của CĐT, mang tính tham khảo; giá trị chính thức theo HĐMB.',P,H-28);
+  x.fillStyle='#9fb7b3';x.font=`400 19px ${FONT}`;wrap(x,'Phiếu tạm tính theo chính sách bán hàng hiện hành của CĐT, mang tính tham khảo; giá trị chính thức theo HĐMB.',IW).forEach((t,i,a)=>x.fillText(t,P,H-26-(a.length-1-i)*26));
   return cv;
 }
 async function save(u,p,rows,adv,toast){
