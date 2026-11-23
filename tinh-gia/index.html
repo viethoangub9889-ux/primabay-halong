@@ -53,6 +53,8 @@ label.f{display:block;font-size:13px;font-weight:600;color:var(--mute);margin-bo
 .tag{display:inline-block;font-size:12px;padding:1px 8px;border-radius:999px;background:#eef3f1;color:var(--teal);font-weight:600}
 .tag.v-bien{background:#e3f0fb;color:#1f5d8c}.tag.v-ho{background:#e6f6f2;color:#1d7a66}.tag.v-hqv{background:#f1ebfa;color:#6a4b99}.tag.v-ql{background:#fcf0e2;color:#9a5b17}.tag.v-nk{background:#eef5e6;color:#4d7a2a}
 .more{margin:14px auto 0;display:block}
+[hidden]{display:none!important}
+.chip.zero{opacity:.45}
 .btn{border:0;border-radius:12px;min-height:44px;padding:0 16px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none}
 .b-teal{background:var(--teal);color:#fff}.b-gold{background:var(--gold);color:#1a2b2a}.b-zalo{background:var(--zalo);color:#fff}.b-ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}
 .unit-hd{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-end;background:var(--deep);color:#fff;border-radius:16px;padding:16px 18px;margin-top:14px}
@@ -208,11 +210,14 @@ function kpis(){const s=U.filter(u=>u.k==='Studio');const min=k=>Math.min(...U.f
   $('#kpis').innerHTML=`<div><b>${U.length}</b><span>căn còn bán</span></div><div><b>${F.ty(min('Studio'))}</b><span>Studio rẻ nhất</span></div><div><b>${F.ty(min('2PN'))}</b><span>2PN rẻ nhất</span></div><div><b>${DB.updated.split('-').reverse().join('/')}</b><span>cập nhật bảng hàng</span></div>`}
 function chips(el,key,opts){el.innerHTML=opts.map(([v,l])=>`<button type="button" class="chip" data-v="${v}" aria-pressed="${st[key]===v}">${l}</button>`).join('');
   el.onclick=e=>{const b=e.target.closest('.chip');if(!b)return;st[key]=b.dataset.v;st.n=60;filters();renderList()}}
+function cnt(o){return U.filter(u=>(!o.k||u.k===o.k)&&(!o.t||u.t===o.t)&&(!o.v||u.v===o.v)).length}
 function filters(){
-  chips($('#fKind'),'k',[['','Tất cả loại'],...KINDS.map(k=>[k,k+' · '+U.filter(u=>u.k===k).length])]);
-  chips($('#fTower'),'t',[['','Cả 2 tòa'],['P','Tòa P · '+U.filter(u=>u.t==='P').length],['M','Tòa M · '+U.filter(u=>u.t==='M').length]]);
+  const c=(over)=>cnt(Object.assign({k:st.k,t:st.t,v:st.v},over));
+  chips($('#fKind'),'k',[['','Tất cả loại · '+c({k:''})],...KINDS.map(k=>[k,k+' · '+c({k})])]);
+  chips($('#fTower'),'t',[['','Cả 2 tòa · '+c({t:''})],['P','Tòa P · '+c({t:'P'})],['M','Tòa M · '+c({t:'M'})]]);
   const views=[...new Set(U.map(u=>u.v).filter(Boolean))];
-  chips($('#fView'),'v',[['','Mọi view'],...views.map(v=>[v,v])]);
+  chips($('#fView'),'v',[['','Mọi view · '+c({v:''})],...views.map(v=>[v,v+' · '+c({v})])]);
+  document.querySelectorAll('.chip').forEach(b=>{if(/ · 0$/.test(b.textContent))b.classList.add('zero')});
 }
 function filtered(){const q=st.q.toUpperCase().replace(/\s/g,'');
   let r=U.filter(u=>(!st.k||u.k===st.k)&&(!st.t||u.t===st.t)&&(!st.v||u.v===st.v)&&(!q||u.c.includes(q)));
@@ -221,8 +226,9 @@ function filtered(){const q=st.q.toUpperCase().replace(/\s/g,'');
 function cheap(){const pool=U.filter(u=>(!st.t||u.t===st.t)&&(!st.v||u.v===st.v));
   $('#cheap').innerHTML=KINDS.map(k=>{const x=pool.filter(u=>u.k===k).sort((a,b)=>a.p-b.p)[0];return x?`<button type="button" data-c="${x.c}"><small>${k} rẻ nhất${st.v?' · '+st.v:''}</small><b>${x.c}</b><span class="p">${F.ty(x.p)}</span></button>`:''}).join('')}
 function card(u){return `<button type="button" class="u" data-c="${u.c}"><div class="h"><span class="c">${u.c}</span><span class="p">${F.ty(u.p)}</span></div><div class="m">${u.k} · Tòa ${u.t} · Tầng ${u.f} · ${u.a} m²</div><div>${vtag(u.v)}</div></button>`}
+function emptyMsg(){const k=st.k||'căn',v=st.v;return `<div class="empty">Hiện không còn ${k}${v?' view '+v:''}${st.t?' ở tòa '+st.t:''} trong giỏ hàng.<br>Bấm các nút có số lượng để chọn tổ hợp khác.</div>`}
 function renderList(){const r=filtered();$('#count').textContent=`Đang hiển thị ${Math.min(st.n,r.length)} / ${r.length} căn`;
-  $('#list').innerHTML=r.slice(0,st.n).map(card).join('')||'<div class="empty">Không có căn nào khớp bộ lọc.</div>';$('#more').hidden=r.length<=st.n;cheap()}
+  $('#list').innerHTML=r.slice(0,st.n).map(card).join('')||emptyMsg();$('#more').hidden=r.length<=st.n;cheap()}
 const pick=e=>{const b=e.target.closest('[data-c]');if(b)openUnit(b.dataset.c)};
 $('#list').onclick=pick;$('#cheap').onclick=pick;
 $('#more').onclick=()=>{st.n+=60;renderList()};
