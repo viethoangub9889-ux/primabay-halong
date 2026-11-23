@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Báo giá căn hộ Prima Bay</title>
+<meta property="og:title" content="Báo giá căn hộ Prima Bay Hạ Long">
+<meta property="og:description" content="Phiếu tính giá và lịch thanh toán chi tiết theo chính sách chủ đầu tư.">
+<meta property="og:image" content="https://primabay-halong.netlify.app/img/pb-img-07_1_pb_birdview_tu_hqv.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Phiếu báo giá gửi khách: một căn, một phương thức, như phiếu in của CĐT nhưng đọc được trên điện thoại. */
+:root{--teal:#1d5352;--deep:#123b3b;--gold:#c8a66a;--goldd:#9a7a3f;--bg:#f6f4ef;--ink:#16302f;--mute:#617370;--line:#e4ded2;--zalo:#0068ff}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 "Be Vietnam Pro",system-ui,sans-serif;overflow-x:clip}
+.hero{position:relative;color:#fff;min-height:300px;display:grid;align-items:end;overflow:hidden}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,35,34,.25),rgba(10,35,34,.9))}
+.hero .in{position:relative;z-index:1;padding:28px max(16px,5vw);max-width:820px;margin:0 auto;width:100%}
+.k{color:#e9d3a6;font-weight:600;font-size:13px}
+h1{font-family:"Playfair Display",serif;font-weight:500;font-size:clamp(30px,6vw,44px);margin:4px 0 6px;line-height:1.1}
+.wrap{max-width:820px;margin:0 auto;padding:0 max(16px,5vw) 110px}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin-top:16px}
+.big{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-end}
+.big b{font-size:28px;color:var(--teal);white-space:nowrap}
+.big span{color:var(--mute);font-size:13px;display:block}
+table{width:100%;border-collapse:collapse;font-size:14px}
+td,th{padding:8px 4px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:12px;color:var(--mute)}
+.r{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+tr.neg .r{color:var(--goldd)}tr.tot td{font-weight:700;color:var(--teal);border:0}
+.note{display:block;font-size:12px;color:var(--mute)}
+tr.ded td{color:#9aa7a4}
+h2{font-size:17px;margin:0 0 8px}
+.adv{display:grid;grid-template-columns:96px minmax(0,1fr);gap:16px;align-items:center}
+.adv img{width:96px;height:128px;object-fit:cover;object-position:50% 0;border-radius:12px}
+.adv.noimg{grid-template-columns:1fr}
+.adv b{font-family:"Playfair Display",serif;font-size:22px;font-weight:500;display:block}
+.dock{position:fixed;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));display:flex;gap:10px;z-index:9;max-width:796px;margin:0 auto}
+.btn{flex:1;border:0;border-radius:999px;min-height:50px;font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;text-decoration:none}
+.gold{background:var(--gold);color:#1a2b2a}.zalo{background:var(--zalo);color:#fff}
+.fine{font-size:12px;color:var(--mute);margin-top:16px}
+.err{text-align:center;padding:80px 20px;color:var(--mute)}
+</style>
+</head>
+<body>
+<div id="app"><div class="err">Đang tải báo giá…</div></div>
+<script src="/tinh-gia/calc.js"></script>
+<script src="/tinh-gia/team.js"></script>
+<script>
+{
+const F=PB_FMT,q=new URLSearchParams(location.search);
+const adv=PB_TEAM[(q.get('ns')||'').toLowerCase()]||PB_TEAM.hoang;
+(async()=>{
+  const db=await (await fetch('/data/units.json',{cache:'no-cache'})).json();
+  const u=db.units.find(x=>x.c===(q.get('c')||'').toUpperCase());
+  const app=document.getElementById('app');
+  if(!u){app.innerHTML=`<div class="err">Căn này hiện không còn trong giỏ hàng hoặc link chưa đúng.<br>Vui lòng liên hệ ${adv.name} · ${F.phone(adv.phone)} để được tư vấn căn tương tự.</div>`+dock();return}
+  const mid=PB.METHODS.some(m=>m.id===q.get('m'))?q.get('m'):'95';
+  const p=PB.price(u.p,mid,q.get('r')==='1');
+  const d0=q.get('d')?new Date(q.get('d')+'T00:00:00'):new Date();
+  const tt=(+q.get('tt')||100)*1e6;
+  const rows=PB.schedule(p,d0,tt);
+  const base=u.p+u.p/1.1*0.02;
+  document.title='Báo giá căn '+u.c+' · Prima Bay';
+  app.innerHTML=`<header class="hero"><img src="/img/pb-img-07_1_pb_birdview_tu_hqv.webp" alt="Prima Bay Hạ Long"><div class="in"><div class="k">Prima Bay · Halong Marina, Bãi Cháy</div><h1>Báo giá căn ${u.c}</h1><div>${u.k} · Tòa ${u.t} · Tầng ${u.f} · ${u.a} m² thông thủy${u.v?' · View '+u.v:''}</div></div></header>
+  <div class="wrap">
+   <div class="card big"><div><span>${p.m.name}${p.rf?' + ưu đãi giới thiệu 2%':''}</span><b>${F.vnd(p.total)} đ</b><span>Tổng giá trị hợp đồng (đã gồm VAT và kinh phí bảo trì)</span></div><div style="text-align:right"><span>Tiết kiệm so với giá niêm yết</span><b style="font-size:20px;color:#2f7d5f">≈ ${F.tr(base-p.total)}</b></div></div>
+   <div class="card"><h2>Chi tiết giá</h2><table>
+    <tr><td>Giá niêm yết (gồm VAT)</td><td class="r">${F.vnd(p.list)}</td></tr>
+    <tr><td>Giá chưa VAT</td><td class="r">${F.vnd(p.pre)}</td></tr>
+    <tr class="neg"><td>Ưu đãi Early Bird 1%</td><td class="r">− ${F.vnd(p.eb)}</td></tr>
+    ${p.ck?`<tr class="neg"><td>Chiết khấu ${p.m.name.toLowerCase()} ${p.m.ck*100}%</td><td class="r">− ${F.vnd(p.ck)}</td></tr>`:''}
+    ${p.rf?`<tr class="neg"><td>Ưu đãi khách được giới thiệu 2%</td><td class="r">− ${F.vnd(p.rf)}</td></tr>`:''}
+    <tr><td>Giá sau chiết khấu (chưa VAT)</td><td class="r">${F.vnd(p.net)}</td></tr>
+    <tr><td>Thuế VAT 10%</td><td class="r">${F.vnd(p.vat)}</td></tr>
+    <tr><td>Kinh phí bảo trì 2%</td><td class="r">${F.vnd(p.kpbt)}</td></tr>
+    <tr class="tot"><td>Tổng giá trị hợp đồng</td><td class="r">${F.vnd(p.total)} đ</td></tr></table></div>
+   <div class="card"><h2>Lịch thanh toán</h2><table><tr><th>Đợt</th><th>Ngày dự kiến</th><th class="r">Số tiền (đ)</th></tr>
+    ${rows.map(r=>`<tr class="${r.ded?'ded':''}"><td><b>${r.n}</b><span class="note">${r.pct?r.pct+' · ':''}${r.note}</span></td><td>${r.date?F.date(r.date):'Theo thông báo'}</td><td class="r">${r.ded?'Khấu trừ':F.vnd(r.amt)}</td></tr>`).join('')}
+    <tr class="tot"><td colspan="2">Tổng cộng</td><td class="r">${F.vnd(p.total)}</td></tr></table></div>
+   <div class="card"><div class="adv${adv.img?'':' noimg'}">${adv.img?`<img src="${adv.img}" alt="${adv.name}">`:''}<div><span style="color:var(--goldd);font-weight:600;font-size:13px">Chuyên viên tư vấn</span><b>${adv.name}</b><span>${F.phone(adv.phone)} · Gọi hoặc nhắn Zalo để giữ căn, xem căn mẫu</span></div></div></div>
+   <div class="fine">Phiếu tạm tính theo chính sách bán hàng hiện hành của chủ đầu tư, chỉ mang tính tham khảo; giá trị chính thức theo hợp đồng mua bán. Bảng hàng cập nhật ngày ${db.updated.split('-').reverse().join('/')}. <a href="/">Xem thông tin dự án Prima Bay</a></div>
+  </div>`+dock();
+})();
+function dock(){return `<div class="dock"><a class="btn gold" href="tel:${adv.phone}">Gọi ${F.phone(adv.phone)}</a><a class="btn zalo" href="https://zalo.me/${adv.phone}">Chat Zalo</a></div>`}
+}
+</script>
+</body>
+</html>

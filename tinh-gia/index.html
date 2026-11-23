@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Tính giá Prima Bay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Công cụ nội bộ cho sale: bảng hàng + tính giá theo phiếu CĐT. Nền sáng, đọc nhanh trên điện thoại, cùng tông xanh ngọc / vàng với landing. */
+:root{--teal:#1d5352;--deep:#123b3b;--gold:#c8a66a;--goldd:#9a7a3f;--bg:#f6f4ef;--card:#fff;--ink:#16302f;--mute:#617370;--line:#e4ded2;--ok:#2f7d5f;--zalo:#0068ff}
+*{box-sizing:border-box;min-width:0}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Be Vietnam Pro",system-ui,sans-serif;overflow-x:clip;padding-bottom:env(safe-area-inset-bottom)}
+h1,h2,h3{margin:0;line-height:1.15}
+h2{font-family:"Playfair Display",Georgia,serif;font-weight:500;font-size:24px}
+button,input,select{font:inherit;color:inherit}
+.wrap{max-width:1100px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-left))}
+header{background:var(--deep);color:#fff;padding:18px 0 0}
+header .top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+header h1{font-family:"Playfair Display",serif;font-weight:500;font-size:26px;margin-right:auto}
+header .me{font-size:13px;color:#cfe0dc;display:flex;align-items:center;gap:8px}
+header .me button{background:transparent;border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:999px;padding:4px 10px;font-size:12px;cursor:pointer}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:16px 0}
+.kpis div{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px 12px}
+.kpis b{display:block;font-size:18px;color:#e9d3a6;white-space:nowrap}
+.kpis span{font-size:12px;color:#b9cfcb}
+.tabs{display:flex;gap:4px}
+.tabs button{flex:1;border:0;background:transparent;color:#cfe0dc;padding:12px;font-weight:600;border-radius:12px 12px 0 0;cursor:pointer}
+.tabs button[aria-selected=true]{background:var(--bg);color:var(--deep)}
+main{padding:18px 0 40px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 13px;min-height:36px;cursor:pointer;font-weight:500;font-size:14px;white-space:nowrap}
+.chip[aria-pressed=true]{background:var(--teal);border-color:var(--teal);color:#fff}
+input[type=text],input[type=search],input[type=date],input[type=number],select{border:1px solid var(--line);border-radius:10px;min-height:44px;padding:0 12px;background:#fff;font-size:16px;width:100%}
+label.f{display:block;font-size:13px;font-weight:600;color:var(--mute);margin-bottom:4px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.cheap{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0}
+.cheap button{text-align:left;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;cursor:pointer}
+.cheap b{display:block}.cheap .p{color:var(--goldd);font-weight:700;font-size:18px}
+.cheap small{color:var(--mute);font-size:12px}
+.list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.u{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;text-align:left;display:grid;gap:4px}
+.u:hover{border-color:var(--teal)}
+.u .h{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.u .c{font-weight:700;font-size:16px}
+.u .p{font-weight:700;color:var(--teal);white-space:nowrap}
+.u .m{font-size:13px;color:var(--mute)}
+.tag{display:inline-block;font-size:12px;padding:1px 8px;border-radius:999px;background:#eef3f1;color:var(--teal);font-weight:600}
+.tag.v-bien{background:#e3f0fb;color:#1f5d8c}.tag.v-ho{background:#e6f6f2;color:#1d7a66}.tag.v-hqv{background:#f1ebfa;color:#6a4b99}.tag.v-ql{background:#fcf0e2;color:#9a5b17}.tag.v-nk{background:#eef5e6;color:#4d7a2a}
+.more{margin:14px auto 0;display:block}
+.btn{border:0;border-radius:12px;min-height:44px;padding:0 16px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none}
+.b-teal{background:var(--teal);color:#fff}.b-gold{background:var(--gold);color:#1a2b2a}.b-zalo{background:var(--zalo);color:#fff}.b-ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}
+.unit-hd{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-end;background:var(--deep);color:#fff;border-radius:16px;padding:16px 18px;margin-top:14px}
+.unit-hd .c{font-size:26px;font-weight:700}
+.unit-hd .m{color:#cfe0dc;font-size:14px}
+.unit-hd .p{font-size:22px;font-weight:700;color:#e9d3a6;text-align:right}
+.unit-hd small{display:block;color:#b9cfcb;font-size:12px;font-weight:400}
+.switch{display:flex;align-items:center;gap:10px;font-weight:600;cursor:pointer}
+.switch input{appearance:none;width:46px;height:26px;border-radius:999px;background:#cfd6d4;position:relative;cursor:pointer;flex:none;transition:.2s}
+.switch input::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.switch input:checked{background:var(--ok)}.switch input:checked::after{left:23px}
+.meths{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:14px}
+.meth{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;cursor:pointer;text-align:left}
+.meth[aria-pressed=true]{border-color:var(--teal);box-shadow:0 0 0 2px var(--teal) inset}
+.meth .n{font-weight:700;font-size:14px}.meth .ck{font-size:12px;color:var(--mute)}
+.meth .t{font-weight:700;font-size:17px;color:var(--teal);margin-top:6px;white-space:nowrap}
+.meth .s{font-size:12px;color:var(--ok);white-space:nowrap}
+.best{display:inline-block;font-size:11px;background:var(--gold);color:#1a2b2a;border-radius:999px;padding:0 7px;font-weight:700;margin-left:4px}
+.two{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:14px;margin-top:14px;align-items:start}
+table{width:100%;border-collapse:collapse;font-size:14px}
+td,th{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:12px;color:var(--mute);font-weight:600}
+td.r,th.r{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+tr.tot td{font-weight:700;color:var(--teal);border-bottom:0;font-size:15px}
+tr.neg td.r{color:var(--goldd)}
+td .note{display:block;font-size:12px;color:var(--mute)}
+tr.ded td{color:#9aa7a4}
+.bank{font-size:11px;background:#e3f0fb;color:#1f5d8c;border-radius:6px;padding:0 6px;margin-left:4px}
+.years{display:grid;gap:8px;margin-top:8px}
+.yr{display:grid;grid-template-columns:70px minmax(0,1fr) auto;gap:10px;align-items:center;font-size:14px}
+.yr .bar{height:10px;border-radius:6px;background:#eef3f1;overflow:hidden}.yr .bar i{display:block;height:100%;background:var(--teal)}
+.yr b{white-space:nowrap;font-variant-numeric:tabular-nums}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.warn{font-size:12px;color:var(--goldd);margin-top:8px}
+.empty{text-align:center;color:var(--mute);padding:40px 16px}
+.inv .kv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.inv .kv div{background:#f6f4ef;border-radius:12px;padding:10px}
+.inv .kv span{display:block;font-size:12px;color:var(--mute)}.inv .kv b{font-size:16px;white-space:nowrap}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:var(--deep);color:#fff;padding:10px 18px;border-radius:999px;font-weight:600;transition:.25s;z-index:60;max-width:90vw;text-align:center}
+.toast.on{transform:translateX(-50%) translateY(0)}
+#gate{position:fixed;inset:0;background:var(--deep);z-index:80;display:grid;place-items:center;padding:20px}
+#gate[hidden]{display:none}
+#gate .box{background:#fff;border-radius:20px;padding:26px;width:min(380px,100%)}
+#gate h2{margin-bottom:6px}#gate p{color:var(--mute);margin:0 0 16px;font-size:14px}
+#gate .err{color:#b3261e;font-size:13px;min-height:18px;margin-top:6px}
+.sec{margin-top:22px}
+.sec>h3{font-size:16px;margin-bottom:8px}
+@media(max-width:900px){.meths{grid-template-columns:repeat(2,minmax(0,1fr))}.list{grid-template-columns:repeat(2,minmax(0,1fr))}.two{grid-template-columns:1fr}.cheap{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.list{grid-template-columns:1fr}.grid3{grid-template-columns:1fr 1fr}.inv .kv{grid-template-columns:1fr 1fr}.g4{grid-template-columns:1fr 1fr}header h1{font-size:22px}.unit-hd .p{text-align:left}}
+</style>
+</head>
+<body>
+<div id="gate" hidden>
+  <form class="box" id="gateForm">
+    <h2>Prima Bay · Sale</h2>
+    <p>Nhập số điện thoại của bạn để vào. Chỉ cần nhập một lần trên mỗi máy.</p>
+    <label class="f" for="gatePhone">Số điện thoại</label>
+    <input type="text" id="gatePhone" inputmode="tel" autocomplete="tel" placeholder="09xx xxx xxx">
+    <div class="err" id="gateErr"></div>
+    <button class="btn b-teal" style="width:100%;margin-top:6px" type="submit">Vào bảng tính giá</button>
+  </form>
+</div>
+
+<header>
+  <div class="wrap">
+    <div class="top"><h1>Prima Bay · Bảng hàng &amp; tính giá</h1><div class="me" id="me"></div></div>
+    <div class="kpis" id="kpis"></div>
+    <div class="tabs" role="tablist"><button role="tab" aria-selected="true" data-tab="hang">Bảng hàng</button><button role="tab" aria-selected="false" data-tab="gia">Tính giá</button></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section id="tab-hang">
+    <div class="panel">
+      <div class="grid2">
+        <div><label class="f" for="q">Tìm mã căn</label><input type="search" id="q" placeholder="VD: M2-12A-25, P1-15"></div>
+        <div><label class="f" for="sort">Sắp xếp</label><select id="sort"><option value="p">Giá thấp → cao</option><option value="-p">Giá cao → thấp</option><option value="c">Theo mã căn</option><option value="a">Diện tích nhỏ → lớn</option></select></div>
+      </div>
+      <div class="row" style="margin-top:12px" id="fKind"></div>
+      <div class="row" style="margin-top:8px" id="fTower"></div>
+      <div class="row" style="margin-top:8px" id="fView"></div>
+    </div>
+    <div class="cheap" id="cheap"></div>
+    <div class="m" id="count" style="color:var(--mute);font-size:13px"></div>
+    <div class="list" id="list"></div>
+    <button class="btn b-ghost more" id="more" hidden>Xem thêm</button>
+  </section>
+
+  <section id="tab-gia" hidden>
+    <div class="panel">
+      <div class="grid3">
+        <div style="grid-column:span 1"><label class="f" for="code">Mã căn</label><input type="text" id="code" list="codes" placeholder="VD: M2-12A-25" autocomplete="off"><datalist id="codes"></datalist></div>
+        <div><label class="f" for="d0">Ngày ký TTĐC</label><input type="date" id="d0"></div>
+        <div><label class="f" for="tt">Tiền thiện chí (triệu)</label><input type="number" id="tt" value="100" min="0" step="10" inputmode="numeric"></div>
+      </div>
+      <div class="row" style="margin-top:14px;justify-content:space-between">
+        <label class="switch"><input type="checkbox" id="ref"> Khách có người giới thiệu (giảm thêm 2%)</label>
+      </div>
+    </div>
+    <div id="calc"><div class="empty">Nhập mã căn ở trên, hoặc bấm vào một căn trong tab Bảng hàng.</div></div>
+  </section>
+</main>
+<div class="toast" id="toast"></div>
+
+<script src="/tinh-gia/calc.js"></script>
+<script src="/tinh-gia/team.js"></script>
+<script>
+{
+const F=PB_FMT, T=PB_TEAM, $=s=>document.querySelector(s);
+const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('on'),2200)};
+const store={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
+const sha=async s=>{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')};
+let ME=null;
+const VCLS={'Biển & bến du thuyền':'v-bien','Hồ nhạc nước':'v-ho','Hoàng Quốc Việt':'v-hqv','QL18 chéo biển':'v-ql','Nội khu':'v-nk'};
+const vtag=v=>v?`<span class="tag ${VCLS[v]||''}">${v}</span>`:'<span class="tag">Chưa có view</span>';
+const KINDS=['Studio','Studio+','2PN','3PN'];
+let U=[],DB={},st={k:'',t:'',v:'',q:'',sort:'p',n:60},cur=null,mid='95';
+
+function setMe(key){ME=key;const m=T[key];$('#me').innerHTML=`${m.name} · ${F.phone(m.phone)} <button type="button" id="logout">Đổi người</button>`;$('#logout').onclick=()=>{store.set('pb_sale','');location.reload()}}
+async function gate(){
+  const k=store.get('pb_sale');if(k&&T[k]){setMe(k);return}
+  $('#gate').hidden=false;$('#gatePhone').focus();
+  $('#gateForm').onsubmit=async e=>{e.preventDefault();let p=$('#gatePhone').value.replace(/\D/g,'');if(p.startsWith('84'))p='0'+p.slice(2);
+    const h=await sha('pb:'+p);const key=Object.keys(T).find(k=>T[k].h===h);
+    if(!key){$('#gateErr').textContent='Số này chưa được cấp quyền. Liên hệ anh Hoàng.';return}
+    store.set('pb_sale',key);setMe(key);$('#gate').hidden=true;toast('Xin chào '+T[key].name)};
+}
+
+function kpis(){const s=U.filter(u=>u.k==='Studio');const min=k=>Math.min(...U.filter(u=>u.k===k).map(u=>u.p));
+  $('#kpis').innerHTML=`<div><b>${U.length}</b><span>căn còn bán</span></div><div><b>${F.ty(min('Studio'))}</b><span>Studio rẻ nhất</span></div><div><b>${F.ty(min('2PN'))}</b><span>2PN rẻ nhất</span></div><div><b>${DB.updated.split('-').reverse().join('/')}</b><span>cập nhật bảng hàng</span></div>`}
+function chips(el,key,opts){el.innerHTML=opts.map(([v,l])=>`<button type="button" class="chip" data-v="${v}" aria-pressed="${st[key]===v}">${l}</button>`).join('');
+  el.onclick=e=>{const b=e.target.closest('.chip');if(!b)return;st[key]=b.dataset.v;st.n=60;filters();renderList()}}
+function filters(){
+  chips($('#fKind'),'k',[['','Tất cả loại'],...KINDS.map(k=>[k,k+' · '+U.filter(u=>u.k===k).length])]);
+  chips($('#fTower'),'t',[['','Cả 2 tòa'],['P','Tòa P · '+U.filter(u=>u.t==='P').length],['M','Tòa M · '+U.filter(u=>u.t==='M').length]]);
+  const views=[...new Set(U.map(u=>u.v).filter(Boolean))];
+  chips($('#fView'),'v',[['','Mọi view'],...views.map(v=>[v,v])]);
+}
+function filtered(){const q=st.q.toUpperCase().replace(/\s/g,'');
+  let r=U.filter(u=>(!st.k||u.k===st.k)&&(!st.t||u.t===st.t)&&(!st.v||u.v===st.v)&&(!q||u.c.includes(q)));
+  const s=st.sort,d=s[0]==='-'?-1:1,k=s.replace('-','');
+  return r.sort((a,b)=>k==='c'?a.c.localeCompare(b.c,undefined,{numeric:true}):(a[k]-b[k])*d)}
+function cheap(){const pool=U.filter(u=>(!st.t||u.t===st.t)&&(!st.v||u.v===st.v));
+  $('#cheap').innerHTML=KINDS.map(k=>{const x=pool.filter(u=>u.k===k).sort((a,b)=>a.p-b.p)[0];return x?`<button type="button" data-c="${x.c}"><small>${k} rẻ nhất${st.v?' · '+st.v:''}</small><b>${x.c}</b><span class="p">${F.ty(x.p)}</span></button>`:''}).join('')}
+function card(u){return `<button type="button" class="u" data-c="${u.c}"><div class="h"><span class="c">${u.c}</span><span class="p">${F.ty(u.p)}</span></div><div class="m">${u.k} · Tòa ${u.t} · Tầng ${u.f} · ${u.a} m²</div><div>${vtag(u.v)}</div></button>`}
+function renderList(){const r=filtered();$('#count').textContent=`Đang hiển thị ${Math.min(st.n,r.length)} / ${r.length} căn`;
+  $('#list').innerHTML=r.slice(0,st.n).map(card).join('')||'<div class="empty">Không có căn nào khớp bộ lọc.</div>';$('#more').hidden=r.length<=st.n;cheap()}
+const pick=e=>{const b=e.target.closest('[data-c]');if(b)openUnit(b.dataset.c)};
+$('#list').onclick=pick;$('#cheap').onclick=pick;
+$('#more').onclick=()=>{st.n+=60;renderList()};
+$('#q').oninput=e=>{st.q=e.target.value;st.n=60;renderList()};
+$('#sort').onchange=e=>{st.sort=e.target.value;renderList()};
+
+function tab(t){document.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===t));$('#tab-hang').hidden=t!=='hang';$('#tab-gia').hidden=t!=='gia';scrollTo({top:0})}
+document.querySelector('.tabs').onclick=e=>{const b=e.target.closest('button');if(b)tab(b.dataset.tab)};
+
+function openUnit(c){cur=U.find(u=>u.c===c);if(!cur)return;$('#code').value=c;tab('gia');calc()}
+$('#code').onchange=$('#code').oninput=e=>{const v=e.target.value.toUpperCase().trim();const u=U.find(x=>x.c===v);if(u){cur=u;calc()}};
+['#d0','#tt','#ref'].forEach(s=>$(s).addEventListener('input',()=>cur&&calc()));
+const d0=()=>{const v=$('#d0').value;const d=v?new Date(v+'T00:00:00'):new Date();d.setHours(0,0,0,0);return d};
+const ttdc=()=>Math.max(0,(+$('#tt').value||0))*1e6;
+
+function calc(){
+  const u=cur,ref=$('#ref').checked,all=PB.METHODS.map(m=>PB.price(u.p,m.id,ref));
+  const base=u.p+u.p/1.1*0.02, bestT=Math.min(...all.map(p=>p.total));
+  const p=all.find(x=>x.m.id===mid), rows=PB.schedule(p,d0(),ttdc());
+  const years={};const D=d0();rows.forEach(r=>{if(!r.amt)return;let y;if(r.date){y=Math.floor((r.date-D)/(365.25*864e5))+1}else y='bg';years[y]=(years[y]||0)+r.amt});
+  const yk=Object.keys(years).filter(k=>k!=='bg').sort((a,b)=>a-b);const ymax=Math.max(...Object.values(years));
+  $('#calc').innerHTML=`
+  <div class="unit-hd"><div><div class="c">${u.c}</div><div class="m">${u.k} · Tòa ${u.t} · Tầng ${u.f} · ${u.a} m² thông thủy</div><div style="margin-top:6px">${vtag(u.v)}</div></div>
+   <div class="p">${F.vnd(u.p)} đ<small>Giá niêm yết đã gồm VAT</small></div></div>
+  <div class="meths">${all.map(x=>`<button type="button" class="meth" data-m="${x.m.id}" aria-pressed="${x.m.id===mid}"><div class="n">${x.m.short}${x.total===bestT?'<span class="best">Rẻ nhất</span>':''}</div><div class="ck">${x.m.ck?'Chiết khấu '+x.m.ck*100+'% + EB 1%':'Early Bird 1%'}${ref?' + GT 2%':''}</div><div class="t">${F.ty(x.total)}</div><div class="s">${base-x.total>0?'Tiết kiệm ≈ '+F.tr(base-x.total):'&nbsp;'}</div></button>`).join('')}</div>
+  <div class="two">
+   <div class="panel"><h3 style="font-size:16px;margin-bottom:6px">${p.m.name}</h3><table>
+    <tr><td>Giá niêm yết (gồm VAT)</td><td class="r">${F.vnd(p.list)}</td></tr>
+    <tr><td>Giá niêm yết chưa VAT</td><td class="r">${F.vnd(p.pre)}</td></tr>
+    <tr class="neg"><td>Early Bird 1%</td><td class="r">− ${F.vnd(p.eb)}</td></tr>
+    ${p.ck?`<tr class="neg"><td>Chiết khấu ${p.m.short} ${p.m.ck*100}%</td><td class="r">− ${F.vnd(p.ck)}</td></tr>`:''}
+    ${p.rf?`<tr class="neg"><td>Khách được giới thiệu 2%</td><td class="r">− ${F.vnd(p.rf)}</td></tr>`:''}
+    <tr><td>Giá sau chiết khấu (chưa VAT)</td><td class="r">${F.vnd(p.net)}</td></tr>
+    <tr><td>VAT 10%</td><td class="r">${F.vnd(p.vat)}</td></tr>
+    <tr><td>Kinh phí bảo trì 2%</td><td class="r">${F.vnd(p.kpbt)}</td></tr>
+    <tr class="tot"><td>Tổng giá trị hợp đồng</td><td class="r">${F.vnd(p.total)} đ</td></tr></table>
+    <div style="font-size:12px;color:var(--mute);margin-top:8px">Đơn giá sau chiết khấu: ${F.vnd(p.net/u.a)} đ/m² (chưa VAT). Tiết kiệm so với giá niêm yết + bảo trì: ${F.vnd(base-p.total)} đ.</div>
+    <div class="sec"><h3>Tiền đóng theo năm</h3><div class="years">${yk.map(y=>`<div class="yr"><span>Năm ${y}</span><div class="bar"><i style="width:${years[y]/ymax*100}%"></i></div><b>${F.ty(years[y])}</b></div>`).join('')}${years.bg?`<div class="yr"><span>Bàn giao</span><div class="bar"><i style="width:${years.bg/ymax*100}%;background:var(--gold)"></i></div><b>${F.ty(years.bg)}</b></div>`:''}</div>
+    ${mid==='nh'?'<div class="warn">Vay NH: khách tự đóng khoảng 30%, ngân hàng giải ngân 65% (hỗ trợ lãi suất tối đa 30 tháng) và 5% khi cấp sổ.</div>':''}</div>
+   </div>
+   <div class="panel"><h3 style="font-size:16px;margin-bottom:6px">Lịch thanh toán</h3><table><tr><th>Đợt</th><th>Ngày</th><th class="r">Số tiền (đ)</th></tr>
+    ${rows.map(r=>`<tr class="${r.ded?'ded':''}"><td><b>${r.n}</b>${r.bank?'<span class="bank">Ngân hàng</span>':''}<span class="note">${r.pct?r.pct+' · ':''}${r.note}</span></td><td>${r.date?F.date(r.date):'Theo thông báo'}</td><td class="r">${r.ded?'Khấu trừ':F.vnd(r.amt)}</td></tr>`).join('')}
+    <tr class="tot"><td colspan="2">Tổng cộng</td><td class="r">${F.vnd(p.total)}</td></tr></table>
+    <div class="acts"><button type="button" class="btn b-teal" id="cp">Sao chép tóm tắt</button><button type="button" class="btn b-gold" id="lk">Link báo giá cho khách</button><a class="btn b-zalo" id="zl" href="https://zalo.me/" target="_blank" rel="noopener">Mở Zalo</a></div>
+    <div class="warn">Số liệu tạm tính theo phiếu tính giá của CĐT, bảng hàng cập nhật ${DB.updated.split('-').reverse().join('/')}. Xác nhận căn còn hàng trước khi chốt.</div>
+   </div>
+  </div>
+  <div class="panel inv sec" id="inv"></div>`;
+  document.querySelectorAll('.meth').forEach(b=>b.onclick=()=>{mid=b.dataset.m;calc()});
+  $('#cp').onclick=()=>copy(summary(u,p,rows),'Đã chép tóm tắt, dán vào Zalo cho khách');
+  $('#lk').onclick=()=>copy(qlink(u,p),'Đã chép link báo giá, gửi cho khách qua Zalo');
+  inv(u);
+}
+function summary(u,p,rows){const m=T[ME]||T.hoang;
+  return `PRIMA BAY HẠ LONG - BÁO GIÁ CĂN ${u.c}\n${u.k} · Tòa ${u.t} · Tầng ${u.f} · ${u.a} m² · View ${u.v||'-'}\nGiá niêm yết: ${F.vnd(u.p)} đ (gồm VAT)\nPhương thức: ${p.m.name}${p.rf?' + giới thiệu 2%':''}\nTổng giá trị HĐ: ${F.vnd(p.total)} đ (đã gồm VAT + bảo trì)\n\nLịch thanh toán:\n${rows.filter(r=>!r.ded).map(r=>`- ${r.n}: ${F.vnd(r.amt)} đ${r.date?' ('+F.date(r.date)+')':' (theo thông báo)'}`).join('\n')}\n\nXem chi tiết: ${qlink(u,p)}\nTư vấn: ${m.name} - ${F.phone(m.phone)}`}
+function qlink(u,p){const q=new URLSearchParams({c:u.c,m:p.m.id});if(p.rf)q.set('r','1');q.set('d',$('#d0').value||new Date().toISOString().slice(0,10));if(ttdc()!==1e8)q.set('tt',ttdc()/1e6);if(ME&&ME!=='hoang')q.set('ns',ME);return location.origin+'/bao-gia/?'+q}
+async function copy(t,msg){try{await navigator.clipboard.writeText(t);toast(msg)}catch(e){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove();toast(msg)}}
+
+const INV={rent:1250000,rate:10,loan:70,op:30,occ:58};
+function inv(u){const el=$('#inv'),v=INV,price=u.p,loan=price*v.loan/100,own=price-loan,interest=loan*v.rate/100;
+  const rev=v.rent*365*v.occ/100,netop=rev*(1-v.op/100),cash=netop-interest;
+  el.innerHTML=`<h3 style="font-size:16px">Bài toán cho thuê (tham khảo)</h3><div style="font-size:12px;color:var(--mute)">Tính trên giá niêm yết của căn đang chọn, sửa giả định là số tự cập nhật.</div>
+  <div class="g4" style="margin-top:10px">
+   <div><label class="f" for="iv-rent">Giá thuê (đ/đêm)</label><input type="number" id="iv-rent" value="${v.rent}" step="50000"></div>
+   <div><label class="f" for="iv-occ">Lấp đầy (%)</label><input type="number" id="iv-occ" value="${v.occ}" min="0" max="100"></div>
+   <div><label class="f" for="iv-loan">Vay (% giá)</label><input type="number" id="iv-loan" value="${v.loan}" min="0" max="70"></div>
+   <div><label class="f" for="iv-rate">Lãi vay (%/năm)</label><input type="number" id="iv-rate" value="${v.rate}" step="0.1"></div></div>
+  <div class="row" style="margin-top:10px">${[50,58,65,72].map(o=>`<button type="button" class="chip" data-o="${o}" aria-pressed="${v.occ===o}">${o}%</button>`).join('')}<span style="font-size:12px;color:var(--mute)">Chi phí vận hành ${v.op}% doanh thu</span></div>
+  <div class="kv"><div><span>Vốn tự có</span><b>${F.ty(own)}</b></div><div><span>Doanh thu/năm</span><b>${F.tr(rev)}</b></div><div><span>Sau vận hành/năm</span><b>${F.tr(netop)}</b></div><div><span>Lãi vay/năm</span><b>${F.tr(interest)}</b></div><div><span>Dòng tiền ròng/năm</span><b style="color:${cash>=0?'var(--ok)':'#b3261e'}">${F.tr(cash)}</b></div><div><span>Lợi suất trên giá</span><b>${(netop/price*100).toFixed(1)}%/năm</b></div></div>
+  <div class="warn">Giả định minh họa, không phải cam kết lợi nhuận của CĐT.</div>`;
+  [['rent','iv-rent'],['occ','iv-occ'],['loan','iv-loan'],['rate','iv-rate']].forEach(([k,id])=>$('#'+id).onchange=e=>{INV[k]=+e.target.value||0;inv(u)});
+  el.querySelectorAll('[data-o]').forEach(b=>b.onclick=()=>{INV.occ=+b.dataset.o;inv(u)});
+}
+
+async function boot(){
+  gate();
+  const n=new Date();$('#d0').value=new Date(n-n.getTimezoneOffset()*6e4).toISOString().slice(0,10);
+  DB=await (await fetch('/data/units.json',{cache:'no-cache'})).json();U=DB.units;
+  $('#codes').innerHTML=U.map(u=>`<option value="${u.c}">`).join('');
+  kpis();filters();renderList();
+  const c=new URLSearchParams(location.search).get('c');if(c)openUnit(c.toUpperCase());
+}
+boot();
+}
+</script>
+</body>
+</html>
