@@ -185,17 +185,17 @@ tr.ded td{color:#9aa7a4}
   <section id="tab-tq" hidden>
     <div class="panel"><h2>Ảnh tổng quan dự án</h2><div style="font-size:13px;color:var(--mute);margin-top:4px">Ảnh phối cảnh chính thức của CĐT. Bấm ảnh để xem lớn, bấm "Lưu ảnh" để tải về gửi khách.</div></div>
     <div class="panel sec"><h2>Video căn hộ mẫu</h2><div class="vids">
-      <figure><video src="/video/can-mau-studio.mp4" poster="/video/can-mau-studio.jpg" controls playsinline preload="none"></video><figcaption><span>Căn mẫu Studio · 52s</span><button type="button" class="btn b-gold" data-sv="studio">⬇ Lưu</button></figcaption></figure>
-      <figure><video src="/video/can-mau-2pn.mp4" poster="/video/can-mau-2pn.jpg" controls playsinline preload="none"></video><figcaption><span>Căn mẫu 2 phòng ngủ · 25s</span><button type="button" class="btn b-gold" data-sv="2pn">⬇ Lưu</button></figcaption></figure>
+      <figure><video src="../video/can-mau-studio.mp4" poster="../video/can-mau-studio.jpg" controls playsinline preload="none"></video><figcaption><span>Căn mẫu Studio · 52s</span><button type="button" class="btn b-gold" data-sv="studio">⬇ Lưu</button></figcaption></figure>
+      <figure><video src="../video/can-mau-2pn.mp4" poster="../video/can-mau-2pn.jpg" controls playsinline preload="none"></video><figcaption><span>Căn mẫu 2 phòng ngủ · 25s</span><button type="button" class="btn b-gold" data-sv="2pn">⬇ Lưu</button></figcaption></figure>
     </div></div>
     <div class="gal" id="gal"></div>
   </section>
 </main>
 <div class="toast" id="toast"></div>
 
-<script src="/tinh-gia/calc.js"></script>
-<script src="/tinh-gia/team.js"></script>
-<script src="/tinh-gia/quote-img.js"></script>
+<script src="../tinh-gia/calc.js"></script>
+<script src="../tinh-gia/team.js"></script>
+<script src="../tinh-gia/quote-img.js"></script>
 <script>
 {
 const F=PB_FMT, T=PB_TEAM, $=s=>document.querySelector(s);
@@ -248,8 +248,8 @@ $('#q').oninput=e=>{st.q=e.target.value;st.n=60;renderList()};
 $('#sort').onchange=e=>{st.sort=e.target.value;renderList()};
 
 let galDone=false;
-async function gal(){if(galDone)return;galDone=true;const L=await (await fetch('/data/tongquan.json')).json();
- $('#gal').innerHTML=L.map(([f,c])=>`<figure><a class="im" href="/img/tongquan/${f}.webp" target="_blank" rel="noopener"><img src="/img/tongquan/${f}.webp" alt="${c}" loading="lazy"></a><figcaption><span>${c}</span><a href="/img/tongquan/${f}.webp" download="prima-bay-${f}.webp">Lưu ảnh</a></figcaption></figure>`).join('')}
+async function gal(){if(galDone)return;galDone=true;const L=await (await fetch('../data/tongquan.json')).json();
+ $('#gal').innerHTML=L.map(([f,c])=>`<figure><a class="im" href="../img/tongquan/${f}.webp" target="_blank" rel="noopener"><img src="../img/tongquan/${f}.webp" alt="${c}" loading="lazy"></a><figcaption><span>${c}</span><a href="../img/tongquan/${f}.webp" download="prima-bay-${f}.webp">Lưu ảnh</a></figcaption></figure>`).join('')}
 function tab(t){document.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===t));$('#tab-hang').hidden=t!=='hang';$('#tab-gia').hidden=t!=='gia';$('#tab-tq').hidden=t!=='tq';if(t==='tq')gal();scrollTo({top:0})}
 document.querySelector('.tabs').onclick=e=>{const b=e.target.closest('button');if(b)tab(b.dataset.tab)};
 
@@ -302,9 +302,9 @@ function calc(){
 }
 const PLAN={M:'plan_M_typical',P:'plan_P_typical'};
 function locHtml(u){const L=u.loc;const plan=u.t==='P'&&u.f==='05'?'plan_P_floor5':PLAN[u.t];
- return `<div class="loc">${L?`<figure><div class="pin"><img src="/img/chican/${L[2]}.webp" alt="Vị trí căn ${u.c} trên phối cảnh"><i class="dot" style="left:${L[0]*100}%;top:${L[1]*100}%"></i></div><figcaption>Chấm đỏ: vị trí tương đối của căn ${u.c} (tầng ${u.f}) trên phối cảnh.</figcaption></figure>`:''}
- <figure><a href="/img/chican/${plan}.webp" target="_blank" rel="noopener"><img src="/img/chican/${plan}.webp" alt="Mặt bằng tòa ${u.t}" loading="lazy"></a><figcaption>Mặt bằng ${u.t==='P'&&u.f==='05'?'tầng 5':'tầng điển hình'} tòa ${u.t}: tìm nhãn ${u.c.replace(/-\w+-/,'-'+(u.t==='P'&&u.f==='05'?'05':'xx')+'-')} trên mặt bằng. Bấm để phóng to.</figcaption></figure></div>`}
-const VIDS={studio:['Studio','/video/can-mau-studio.mp4','/video/can-mau-studio.jpg','52 giây'],'2pn':['2 phòng ngủ','/video/can-mau-2pn.mp4','/video/can-mau-2pn.jpg','25 giây']};
+ return `<div class="loc">${L?`<figure><div class="pin"><img src="../img/chican/${L[2]}.webp" alt="Vị trí căn ${u.c} trên phối cảnh"><i class="dot" style="left:${L[0]*100}%;top:${L[1]*100}%"></i></div><figcaption>Chấm đỏ: vị trí tương đối của căn ${u.c} (tầng ${u.f}) trên phối cảnh.</figcaption></figure>`:''}
+ <figure><a href="../img/chican/${plan}.webp" target="_blank" rel="noopener"><img src="../img/chican/${plan}.webp" alt="Mặt bằng tòa ${u.t}" loading="lazy"></a><figcaption>Mặt bằng ${u.t==='P'&&u.f==='05'?'tầng 5':'tầng điển hình'} tòa ${u.t}: tìm nhãn ${u.c.replace(/-\w+-/,'-'+(u.t==='P'&&u.f==='05'?'05':'xx')+'-')} trên mặt bằng. Bấm để phóng to.</figcaption></figure></div>`}
+const VIDS={studio:['Studio','../video/can-mau-studio.mp4','../video/can-mau-studio.jpg','52 giây'],'2pn':['2 phòng ngủ','../video/can-mau-2pn.mp4','../video/can-mau-2pn.jpg','25 giây']};
 const vidKey=k=>k==='2PN'?'2pn':(k==='Studio'||k==='Studio+')?'studio':null;
 async function saveVid(key,btn){const v=VIDS[key];const old=btn.textContent;btn.disabled=true;btn.textContent='Đang tải video…';
  try{const blob=await (await fetch(v[1])).blob();const name='prima-bay-can-mau-'+key+'.mp4';const file=new File([blob],name,{type:'video/mp4'});
@@ -318,7 +318,7 @@ function vidHtml(u){const k=vidKey(u.k);if(!k)return '';const v=VIDS[k];
 document.addEventListener('click',e=>{const b=e.target.closest('[data-sv]');if(b)saveVid(b.dataset.sv,b)});
 function summary(u,p,rows){const m=T[ME]||T.hoang;
   return `PRIMA BAY HẠ LONG - BÁO GIÁ CĂN ${u.c}\n${u.k} · Tòa ${u.t} · Tầng ${u.f} · ${u.a} m² · View ${u.v||'-'}\nGiá niêm yết: ${F.vnd(u.p)} đ (gồm VAT)\nPhương thức: ${p.m.name}${p.rf?' + giới thiệu 2%':''}\nTổng giá trị HĐ: ${F.vnd(p.total)} đ (đã gồm VAT + bảo trì)\n\nLịch thanh toán:\n${rows.filter(r=>!r.ded).map(r=>`- ${r.n}: ${F.vnd(r.amt)} đ${r.date?' ('+F.date(r.date)+')':' (theo thông báo)'}`).join('\n')}\n\nXem chi tiết: ${qlink(u,p)}\nTư vấn: ${m.name} - ${F.phone(m.phone)}`}
-function qlink(u,p){const q=new URLSearchParams({c:u.c,m:p.m.id});if(p.rf)q.set('r','1');q.set('d',$('#d0').value||new Date().toISOString().slice(0,10));if(ttdc()!==1e8)q.set('tt',ttdc()/1e6);if(ME&&ME!=='hoang')q.set('ns',ME);return location.origin+'/bao-gia/?'+q}
+function qlink(u,p){const q=new URLSearchParams({c:u.c,m:p.m.id});if(p.rf)q.set('r','1');q.set('d',$('#d0').value||new Date().toISOString().slice(0,10));if(ttdc()!==1e8)q.set('tt',ttdc()/1e6);if(ME&&ME!=='hoang')q.set('ns',ME);return new URL('../bao-gia/?'+q,location.href).href}
 async function copy(t,msg){try{await navigator.clipboard.writeText(t);toast(msg)}catch(e){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove();toast(msg)}}
 
 const INV={rent:1250000,rate:10,loan:70,op:30,occ:58};
@@ -340,7 +340,7 @@ function inv(u){const el=$('#inv'),v=INV,price=u.p,loan=price*v.loan/100,own=pri
 async function boot(){
   gate();
   const n=new Date();$('#d0').value=new Date(n-n.getTimezoneOffset()*6e4).toISOString().slice(0,10);
-  DB=await (await fetch('/data/units.json',{cache:'no-cache'})).json();U=DB.units;
+  DB=await (await fetch('../data/units.json',{cache:'no-cache'})).json();U=DB.units;
   $('#codes').innerHTML=U.map(u=>`<option value="${u.c}">`).join('');
   kpis();filters();renderList();
   const c=new URLSearchParams(location.search).get('c');if(c)openUnit(c.toUpperCase());

@@ -7,7 +7,7 @@
 <title>Báo giá căn hộ Prima Bay</title>
 <meta property="og:title" content="Báo giá căn hộ Prima Bay Hạ Long">
 <meta property="og:description" content="Phiếu tính giá và lịch thanh toán chi tiết theo chính sách chủ đầu tư.">
-<meta property="og:image" content="https://primabay-halong.netlify.app/img/og-share.jpg">
+<meta property="og:image" content="https://viethoangub9889-ux.github.io/primabay-halong/img/og-share.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -49,15 +49,15 @@ h2{font-size:17px;margin:0 0 8px}
 </head>
 <body>
 <div id="app"><div class="err">Đang tải báo giá…</div></div>
-<script src="/tinh-gia/calc.js"></script>
-<script src="/tinh-gia/team.js"></script>
-<script src="/tinh-gia/quote-img.js"></script>
+<script src="../tinh-gia/calc.js"></script>
+<script src="../tinh-gia/team.js"></script>
+<script src="../tinh-gia/quote-img.js"></script>
 <script>
 {
 const F=PB_FMT,q=new URLSearchParams(location.search);
 const adv=PB_TEAM[(q.get('ns')||'').toLowerCase()]||PB_TEAM.hoang;
 (async()=>{
-  const db=await (await fetch('/data/units.json',{cache:'no-cache'})).json();
+  const db=await (await fetch('../data/units.json',{cache:'no-cache'})).json();
   const u=db.units.find(x=>x.c===(q.get('c')||'').toUpperCase());
   const app=document.getElementById('app');
   if(!u){app.innerHTML=`<div class="err">Căn này hiện không còn trong giỏ hàng hoặc link chưa đúng.<br>Vui lòng liên hệ ${adv.name} · ${F.phone(adv.phone)} để được tư vấn căn tương tự.</div>`+dock();return}
@@ -68,10 +68,10 @@ const adv=PB_TEAM[(q.get('ns')||'').toLowerCase()]||PB_TEAM.hoang;
   const rows=PB.schedule(p,d0,tt);
   const base=u.p+u.p/1.1*0.02;
   document.title='Báo giá căn '+u.c+' · Prima Bay';
-  app.innerHTML=`<header class="hero"><img src="/img/pb-img-07_1_pb_birdview_tu_hqv.webp" alt="Prima Bay Hạ Long"><div class="in"><div class="k">Prima Bay · Halong Marina, Bãi Cháy</div><h1>Báo giá căn ${u.c}</h1><div>${u.k} · Tòa ${u.t} · Tầng ${u.f} · ${u.a} m² thông thủy${u.v?' · View '+u.v:''}</div></div></header>
+  app.innerHTML=`<header class="hero"><img src="../img/pb-img-07_1_pb_birdview_tu_hqv.webp" alt="Prima Bay Hạ Long"><div class="in"><div class="k">Prima Bay · Halong Marina, Bãi Cháy</div><h1>Báo giá căn ${u.c}</h1><div>${u.k} · Tòa ${u.t} · Tầng ${u.f} · ${u.a} m² thông thủy${u.v?' · View '+u.v:''}</div></div></header>
   <div class="wrap">
    <div class="card big"><div><span>${p.m.name}${p.rf?' + ưu đãi giới thiệu 2%':''}</span><b>${F.vnd(p.total)} đ</b><span>Tổng giá trị hợp đồng (đã gồm VAT và kinh phí bảo trì)</span></div><div style="text-align:right"><span>Tiết kiệm so với giá niêm yết</span><b style="font-size:20px;color:#2f7d5f">≈ ${F.tr(base-p.total)}</b></div></div>
-   ${u.loc?`<div class="card"><h2>Vị trí căn trên dự án</h2><figure class="locf"><img src="/img/chican/${u.loc[2]}.webp" alt="Vị trí căn ${u.c}"><i class="dot" style="left:${u.loc[0]*100}%;top:${u.loc[1]*100}%"></i></figure><div style="font-size:12px;color:var(--mute);margin-top:6px">Chấm đỏ: vị trí tương đối của căn trên phối cảnh, mang tính minh họa.</div></div>`:''}
+   ${u.loc?`<div class="card"><h2>Vị trí căn trên dự án</h2><figure class="locf"><img src="../img/chican/${u.loc[2]}.webp" alt="Vị trí căn ${u.c}"><i class="dot" style="left:${u.loc[0]*100}%;top:${u.loc[1]*100}%"></i></figure><div style="font-size:12px;color:var(--mute);margin-top:6px">Chấm đỏ: vị trí tương đối của căn trên phối cảnh, mang tính minh họa.</div></div>`:''}
    <div class="card"><h2>Chi tiết giá</h2><table>
     <tr><td>Giá niêm yết (gồm VAT)</td><td class="r">${F.vnd(p.list)}</td></tr>
     <tr><td>Giá chưa VAT</td><td class="r">${F.vnd(p.pre)}</td></tr>
@@ -86,7 +86,7 @@ const adv=PB_TEAM[(q.get('ns')||'').toLowerCase()]||PB_TEAM.hoang;
     ${rows.map(r=>`<tr class="${r.ded?'ded':''}"><td><b>${r.n}</b><span class="note">${r.pct?r.pct+' · ':''}${r.note}</span></td><td>${r.date?F.date(r.date):'Theo thông báo'}</td><td class="r">${r.ded?'Khấu trừ':F.vnd(r.amt)}</td></tr>`).join('')}
     <tr class="tot"><td colspan="2">Tổng cộng</td><td class="r">${F.vnd(p.total)}</td></tr></table></div>
    <div class="card"><div class="adv${adv.img?'':' noimg'}">${adv.img?`<img src="${adv.img}" alt="${adv.name}">`:''}<div><span style="color:var(--goldd);font-weight:600;font-size:13px">Chuyên viên tư vấn</span><b>${adv.name}</b><span>${F.phone(adv.phone)} · Gọi hoặc nhắn Zalo để giữ căn, xem căn mẫu</span></div></div></div>
-   <div class="fine">Phiếu tạm tính theo chính sách bán hàng hiện hành của chủ đầu tư, chỉ mang tính tham khảo; giá trị chính thức theo hợp đồng mua bán. Bảng hàng cập nhật ngày ${db.updated.split('-').reverse().join('/')}. <a href="/">Xem thông tin dự án Prima Bay</a></div>
+   <div class="fine">Phiếu tạm tính theo chính sách bán hàng hiện hành của chủ đầu tư, chỉ mang tính tham khảo; giá trị chính thức theo hợp đồng mua bán. Bảng hàng cập nhật ngày ${db.updated.split('-').reverse().join('/')}. <a href="../">Xem thông tin dự án Prima Bay</a></div>
   </div>`+dock();
 })();
 function dock(){return `<div class="dock"><a class="btn gold" href="tel:${adv.phone}">Gọi ${F.phone(adv.phone)}</a><a class="btn zalo" href="https://zalo.me/${adv.phone}">Chat Zalo</a></div>`}

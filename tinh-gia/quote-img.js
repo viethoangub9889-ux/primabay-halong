@@ -22,10 +22,10 @@ async function render(u,p,rows,adv){
   const save=u.p+u.p/1.1*0.02-p.total;
   if(save>0){x.textAlign='right';x.fillStyle='#9fe3c4';x.font=`600 26px ${FONT}`;x.fillText('Tiết kiệm ≈ '+F.tr(save),W-P,312);x.textAlign='left'}
   let y=360;
-  {const im=await load('/img/tongquan/01-hai-toa-chinh-dien.webp');if(im){const bh=300,s=Math.max(IW/im.width,bh/im.height),dw=im.width*s,dh=im.height*s;x.save();x.beginPath();x.roundRect(P,y,IW,bh,22);x.clip();x.drawImage(im,P+(IW-dw)/2,y+(bh-dh)*0.55,dw,dh);x.restore();
+  {const im=await load('../img/tongquan/01-hai-toa-chinh-dien.webp');if(im){const bh=300,s=Math.max(IW/im.width,bh/im.height),dw=im.width*s,dh=im.height*s;x.save();x.beginPath();x.roundRect(P,y,IW,bh,22);x.clip();x.drawImage(im,P+(IW-dw)/2,y+(bh-dh)*0.55,dw,dh);x.restore();
    x.fillStyle=C.mute;x.font=`400 22px ${FONT}`;x.fillText('Phối cảnh dự án Prima Bay, Halong Marina, Bãi Cháy, Hạ Long.',P,y+bh+30);y+=bh+50;}}
   // location image
-  if(u.loc){const im=await load('/img/chican/'+u.loc[2]+'.webp');if(im){
+  if(u.loc){const im=await load('../img/chican/'+u.loc[2]+'.webp');if(im){
     const bh=400,iw=im.width,ih=im.height;const s=Math.max(IW/iw,bh/ih);const dw=iw*s,dh=ih*s;
     let ox=P+IW/2-u.loc[0]*dw, oy=y+bh/2-u.loc[1]*dh; ox=Math.min(P,Math.max(P+IW-dw,ox)); oy=Math.min(y,Math.max(y+bh-dh,oy));
     x.save();x.beginPath();x.roundRect(P,y,IW,bh,22);x.clip();x.drawImage(im,ox,oy,dw,dh);x.restore();

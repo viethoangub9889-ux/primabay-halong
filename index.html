@@ -6,14 +6,14 @@
 <title>Prima Bay Hạ Long</title>
 <meta name="description" content="Căn hộ nghỉ dưỡng Prima Bay, cửa ngõ Halong Marina, Bãi Cháy. Studio từ 1,69 tỷ, chiết khấu tới 16%, tầm nhìn 270° vịnh Hạ Long.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://primabay-halong.netlify.app/">
+<meta property="og:url" content="https://viethoangub9889-ux.github.io/primabay-halong/">
 <meta property="og:title" content="Prima Bay Hạ Long · Căn hộ nghỉ dưỡng bên vịnh di sản">
 <meta property="og:description" content="Studio từ 1,69 tỷ · Chiết khấu tới 16% · Tầm nhìn 270° vịnh Hạ Long, hồ nhạc nước, bến du thuyền.">
-<meta property="og:image" content="https://primabay-halong.netlify.app/img/og-share.jpg">
+<meta property="og:image" content="https://viethoangub9889-ux.github.io/primabay-halong/img/og-share.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://primabay-halong.netlify.app/img/og-share.jpg">
+<meta name="twitter:image" content="https://viethoangub9889-ux.github.io/primabay-halong/img/og-share.jpg">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -367,7 +367,7 @@ const U=[
 ];
 const M=[['Thanh toán sớm 95%',.16,'Đợt 1: 10% trong 7 ngày làm việc sau đặt cọc, đợt 2: 85% sau đó 20 ngày'],['Thanh toán sớm 50%',.12,'50% sớm, phần còn lại chia đợt tới bàn giao'],['Thanh toán sớm 30%',.08,'Đợt 1 đóng 30%, các đợt sau mỗi đợt 5%'],['Thanh toán theo tiến độ',.05,'Chia 14 đợt theo tiến độ, đợt lớn nhất 25% khi bàn giao'],['Vay ngân hàng',0,'Vay tới 70%, hỗ trợ lãi suất tới 65% trong 30 tháng']];
 const drawUnits=()=>{document.getElementById('units').innerHTML=U.map((u,i)=>`<button type="button" class="card rv" data-i="${i}"><div class="ph"><img src="${u.img}" alt="Nội thất căn ${u.k}" loading="lazy"></div><div class="tx"><h3>${u.k}</h3><p>${u.a}</p><div class="price">Giá chỉ từ<b>${ty(u.p)}</b></div><span class="more">Xem chi tiết →</span></div></button>`).join('');document.querySelectorAll('#units .rv').forEach(e=>e.classList.add('on'))};drawUnits();
-fetch('/data/units.json',{cache:'no-cache'}).then(r=>r.json()).then(db=>{const K={'Studio':'Studio','Studio+':'Studio+','2 phòng ngủ':'2PN','3 phòng ngủ':'3PN'};U.forEach(u=>{const xs=db.units.filter(x=>x.k===K[u.k]);if(xs.length)u.p=Math.min(...xs.map(x=>x.p))});drawUnits()}).catch(()=>{});
+fetch('data/units.json',{cache:'no-cache'}).then(r=>r.json()).then(db=>{const K={'Studio':'Studio','Studio+':'Studio+','2 phòng ngủ':'2PN','3 phòng ngủ':'3PN'};U.forEach(u=>{const xs=db.units.filter(x=>x.k===K[u.k]);if(xs.length)u.p=Math.min(...xs.map(x=>x.p))});drawUnits()}).catch(()=>{});
 const dlg=document.getElementById('dlg');
 document.getElementById('units').addEventListener('click',e=>{const b=e.target.closest('[data-i]');if(!b)return;const u=U[+b.dataset.i];const base=u.p/1.1*.84*.99*1.12;
  document.getElementById('dlgc').innerHTML=`<div class="ph"><img src="${u.img}" alt="Căn ${u.k}"></div><div class="tx"><h3>Căn ${u.k}</h3><p class="lead" style="margin-top:8px">${u.d}</p><dl><dt>Diện tích</dt><dd>${u.a} (thông thủy)</dd><dt>Giá niêm yết từ</dt><dd>${ty(u.p)} (gồm VAT)</dd><dt>Thanh toán sớm 95%</dt><dd>khoảng ${ty(base)} (gồm VAT, bảo trì)</dd><dt>Phù hợp</dt><dd>${u.fit}</dd><dt>Hướng view</dt><dd>Biển, hồ nhạc nước, nội khu, Hoàng Quốc Việt hoặc QL18 tùy căn</dd></dl><div class="cta"><a class="btn gold" href="https://zalo.me/0829980198">Nhận bảng hàng ${u.k}</a></div></div>`;
