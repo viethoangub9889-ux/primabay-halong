@@ -168,6 +168,7 @@ tr.ded td{color:#9aa7a4}
 
 <script src="/tinh-gia/calc.js"></script>
 <script src="/tinh-gia/team.js"></script>
+<script src="/tinh-gia/quote-img.js"></script>
 <script>
 {
 const F=PB_FMT, T=PB_TEAM, $=s=>document.querySelector(s);
@@ -252,13 +253,14 @@ function calc(){
    <div class="panel"><h3 style="font-size:16px;margin-bottom:6px">Lịch thanh toán</h3><table><tr><th>Đợt</th><th>Ngày</th><th class="r">Số tiền (đ)</th></tr>
     ${rows.map(r=>`<tr class="${r.ded?'ded':''}"><td><b>${r.n}</b>${r.bank?'<span class="bank">Ngân hàng</span>':''}<span class="note">${r.pct?r.pct+' · ':''}${r.note}</span></td><td>${r.date?F.date(r.date):'Theo thông báo'}</td><td class="r">${r.ded?'Khấu trừ':F.vnd(r.amt)}</td></tr>`).join('')}
     <tr class="tot"><td colspan="2">Tổng cộng</td><td class="r">${F.vnd(p.total)}</td></tr></table>
-    <div class="acts"><button type="button" class="btn b-teal" id="cp">Sao chép tóm tắt</button><button type="button" class="btn b-gold" id="lk">Link báo giá cho khách</button><a class="btn b-zalo" id="zl" href="https://zalo.me/" target="_blank" rel="noopener">Mở Zalo</a></div>
+    <div class="acts"><button type="button" class="btn b-gold" id="img" style="flex:1 1 100%">📷 Lưu ảnh báo giá gửi khách</button><button type="button" class="btn b-teal" id="cp">Sao chép tóm tắt</button><button type="button" class="btn b-ghost" id="lk">Link báo giá cho khách</button><a class="btn b-zalo" id="zl" href="https://zalo.me/" target="_blank" rel="noopener">Mở Zalo</a></div>
     <div class="warn">Số liệu tạm tính theo phiếu tính giá của CĐT, bảng hàng cập nhật ${DB.updated.split('-').reverse().join('/')}. Xác nhận căn còn hàng trước khi chốt.</div>
    </div>
   </div>
   <div class="panel sec"><h3 style="font-size:16px">Vị trí căn</h3>${locHtml(u)}</div>
   <div class="panel inv sec" id="inv"></div>`;
   document.querySelectorAll('.meth').forEach(b=>b.onclick=()=>{mid=b.dataset.m;calc()});
+  $('#img').onclick=async e=>{const b=e.currentTarget;b.disabled=true;b.textContent='Đang tạo ảnh…';try{await PB_IMG.save(u,p,rows,T[ME]||T.hoang,toast)}finally{b.disabled=false;b.textContent='📷 Lưu ảnh báo giá gửi khách'}};
   $('#cp').onclick=()=>copy(summary(u,p,rows),'Đã chép tóm tắt, dán vào Zalo cho khách');
   $('#lk').onclick=()=>copy(qlink(u,p),'Đã chép link báo giá, gửi cho khách qua Zalo');
   inv(u);
