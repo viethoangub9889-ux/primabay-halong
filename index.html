@@ -140,13 +140,13 @@ dialog::backdrop{background:rgba(6,25,24,.6)}
 .play{text-decoration:none;position:absolute;z-index:1;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;gap:6px;background:rgba(10,35,34,.7);backdrop-filter:blur(6px);color:#fff;border:1px solid rgba(233,211,166,.6);border-radius:20px;padding:20px 28px;font:600 15px "Be Vietnam Pro",sans-serif;cursor:pointer}
 .play span{font-family:"Playfair Display",serif;font-size:40px;color:#e9d3a6;line-height:1}
 @media(max-width:600px){.v360{aspect-ratio:3/4}}
-.adv{display:grid;grid-template-columns:150px minmax(0,1fr);gap:20px;align-items:end;margin-top:24px;padding:0;border-radius:18px;overflow:hidden;background:linear-gradient(135deg,#1d4a46,#143534);border:1px solid var(--line)}
-.adv img{width:150px;height:200px;object-fit:cover;object-position:50% 0;display:block;background:#dfe3e6}
-.adv>div{padding:18px 18px 18px 0}
+.adv{display:grid;grid-template-columns:150px minmax(0,1fr);gap:22px;align-items:center;margin-top:24px}
+.adv img{width:150px;height:200px;object-fit:cover;object-position:50% 0;display:block;border-radius:14px}
+.adv>div{padding:0}
 .adv b{display:block;font-family:"Playfair Display",serif;font-size:26px;font-weight:500;color:#fff;line-height:1.15}
 .adv span{display:block;font-size:14px;color:#a9c3bf;margin-top:4px}
 .adv span.role{color:#e9d3a6;font-weight:600;margin-top:6px}
-.adv.noimg{grid-template-columns:1fr}.adv.noimg>div{padding:18px}
+.adv.noimg{grid-template-columns:1fr}.adv.noimg>div{padding:0}
 .rv{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s ease}
 .rv.on{opacity:1;transform:none}
 @media(max-width:900px){.views{grid-template-columns:repeat(2,minmax(0,1fr))}.views .card,.views .card.w{grid-column:span 1}.units{grid-template-columns:repeat(2,minmax(0,1fr))}.calc{grid-template-columns:1fr}nav .links{display:none}}
