@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prima Bay Hạ Long</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* VOICE  occasion: căn hộ nghỉ dưỡng cao cấp, sang và yên, gửi khách qua Zalo
+   IDEA   brochure in của chủ đầu tư mở ra trên điện thoại: ảnh lớn, chữ ít, số liệu rõ
+   PICTURE ảnh phối cảnh gốc của CĐT, toàn khổ, zoom chậm
+   COLOUR xanh ngọc đậm của primabay.vn, trắng ngà, vàng champagne làm điểm nhấn
+   TYPE   Playfair Display cho tiêu đề, Be Vietnam Pro cho nội dung
+   LAYOUT hero toàn màn hình; các dải xen kẽ xanh đậm / sáng; điện thoại xếp 1 cột, thanh Gọi–Zalo dính đáy */
+:root{color-scheme:light dark;--teal:#1d5352;--deep:#123b3b;--gold:#c8a66a;--goldd:#a9864a;--bg:light-dark(#fbf9f5,#0d2423);--card:light-dark(#ffffff,#143534);--ink:light-dark(#16302f,#eef3f1);--mute:light-dark(#5b6d6b,#a9bdba);--line:light-dark(#e6e0d4,#24504e)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Be Vietnam Pro",system-ui,sans-serif;overflow-x:clip}
+img{max-width:100%;display:block}
+h1,h2,h3{font-family:"Playfair Display",Georgia,serif;font-weight:500;letter-spacing:-.01em;line-height:1.1;margin:0;text-wrap:balance}
+h2{font-size:clamp(30px,4.2vw,46px)}
+h3{font-size:22px}
+p{margin:0}
+a{color:inherit}
+.wrap{max-width:1200px;margin:0 auto}
+.band{padding:clamp(48px,7vw,96px) max(5vw,16px)}
+.dark{background:var(--deep);color:#eef3f1;--mute:#a9c3bf;--line:#2c5a58;--card:#18453f}
+.kick{color:var(--gold);font-weight:600;font-size:14px;margin-bottom:12px}
+.lead{color:var(--mute);max-width:640px;margin-top:14px;font-size:17px}
+nav{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;gap:20px;padding:12px max(5vw,16px);transition:background .3s}
+nav.solid{background:color-mix(in srgb,var(--deep) 94%,transparent);backdrop-filter:blur(8px)}
+nav .logo{font-family:"Playfair Display",serif;color:#fff;font-size:20px;letter-spacing:.18em;text-decoration:none;margin-right:auto}
+nav .links{display:flex;gap:18px}
+nav .links a{color:#e6efed;text-decoration:none;font-size:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 22px;border-radius:999px;font-weight:600;font-size:15px;text-decoration:none;border:0;cursor:pointer;font-family:inherit}
+.gold{background:var(--gold);color:#1a2b2a;position:relative;overflow:hidden}
+.gold::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.45) 50%,transparent 65%);transform:translateX(-120%);animation:shine 4.5s ease-in-out infinite}
+@keyframes shine{0%,60%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+.ghost{border:1px solid rgba(255,255,255,.55);color:#fff;background:transparent}
+.hero{position:relative;min-height:min(100svh,940px);display:grid;align-items:end;color:#fff;overflow:hidden}
+.hero .bgimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:kb 22s ease-out both}
+@keyframes kb{from{transform:scale(1.12)}to{transform:scale(1)}}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,35,34,.55) 0%,rgba(10,35,34,.05) 35%,rgba(10,35,34,.85) 100%)}
+.hero .in{position:relative;z-index:1;padding:120px max(5vw,16px) 40px;max-width:1200px;margin:0 auto;width:100%}
+.hero h1{font-size:clamp(40px,6.4vw,78px);max-width:860px}
+.hero h1 em{font-style:italic;color:#e9d3a6}
+.hero p.sub{max-width:600px;margin-top:18px;font-size:17px;color:#e3ecea}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;margin-top:44px;background:rgba(255,255,255,.18);border-radius:14px;overflow:hidden}
+.stats div{background:rgba(12,40,39,.62);backdrop-filter:blur(6px);padding:16px 18px}
+.stats b{display:block;font-family:"Playfair Display",serif;font-size:clamp(26px,3vw,34px);font-weight:500;color:#e9d3a6;white-space:nowrap}
+.stats span{font-size:13px;color:#d4e1de}
+.note{font-size:13px;color:var(--mute);margin-top:14px}
+.hero .note{color:#bcd0cc}
+.two{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(28px,5vw,64px);align-items:center}
+.ph{border-radius:18px;overflow:hidden;background:var(--line)}
+.ph img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:28px}
+.facts div{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--card)}
+.facts b{font-family:"Playfair Display",serif;font-size:26px;font-weight:600;color:light-dark(var(--teal),#e9d3a6);display:block}
+.dark .facts b{color:#e9d3a6}
+.facts span{font-size:14px;color:var(--mute)}
+.times{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 28px;margin-top:8px}
+.times div{display:flex;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.times b{font-family:"Playfair Display",serif;color:var(--gold);font-weight:500;font-size:20px;white-space:nowrap}
+.views{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px;margin-top:36px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;transition:transform .35s,box-shadow .35s}
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(10,40,38,.14)}
+.card:hover img{transform:scale(1.05)}
+.card .ph{border-radius:0;aspect-ratio:16/10}
+.card .tx{padding:16px 18px 20px}
+.card p{color:var(--mute);font-size:15px;margin-top:6px}
+.views .card{grid-column:span 2}
+.views .card.w{grid-column:span 3}
+.units{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:36px}
+.units .card{cursor:pointer;text-align:left;font:inherit;color:inherit;padding:0}
+.units .ph{aspect-ratio:4/3}
+.price{margin-top:12px;font-size:13px;color:var(--mute)}
+.price b{display:block;font-family:"Playfair Display",serif;font-size:28px;font-weight:500;color:light-dark(var(--goldd),#e9d3a6);white-space:nowrap}
+.more{display:inline-block;margin-top:10px;font-size:14px;font-weight:600;color:light-dark(var(--teal),#e9d3a6)}
+.calc{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.4fr);gap:24px;margin-top:36px;align-items:start}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px}
+label{display:block;font-size:14px;font-weight:600;margin:14px 0 6px}
+label:first-child{margin-top:0}
+select,input[type=text]{width:100%;min-height:46px;font:16px "Be Vietnam Pro",sans-serif;padding:0 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+select:focus,input:focus,.btn:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.chk{display:flex;gap:10px;align-items:center;margin-top:16px;font-size:15px;font-weight:500}
+.chk input{width:20px;height:20px;accent-color:var(--teal)}
+.meth{display:grid;gap:10px}
+.m{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 16px;padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+.m.best{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.m h4{margin:0;font-size:16px}
+.m .ck{font-size:13px;color:var(--mute)}
+.m .tot{text-align:right;font-family:"Playfair Display",serif;font-size:22px;white-space:nowrap}
+.m .sv{text-align:right;font-size:13px;color:#2f7d5f;white-space:nowrap}
+.tag{display:inline-block;background:var(--gold);color:#1a2b2a;font-size:12px;font-weight:700;padding:2px 10px;border-radius:999px;margin-left:8px;vertical-align:middle}
+.amen{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px;margin-top:32px;scrollbar-width:thin}
+.amen figure{flex:0 0 min(78vw,340px);scroll-snap-align:start;margin:0;border-radius:16px;overflow:hidden;position:relative;aspect-ratio:3/4}
+.amen img{width:100%;height:100%;object-fit:cover}
+.amen figcaption{position:absolute;left:0;right:0;bottom:0;padding:40px 16px 14px;background:linear-gradient(transparent,rgba(8,30,29,.85));color:#fff;font-weight:600}
+.arrows{display:flex;gap:10px;margin-top:8px}
+.arrows button,.tabs button{min-height:44px;min-width:44px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:600 15px "Be Vietnam Pro",sans-serif;cursor:pointer;padding:0 18px}
+.alist{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.alist span{border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:14px}
+.tabs{display:flex;gap:10px;margin-top:28px}
+.tabs button[aria-selected=true]{background:var(--teal);color:#fff;border-color:var(--teal)}
+.plan{margin-top:18px;border-radius:18px;overflow:hidden;background:var(--line);max-width:760px}
+.plan img{width:100%;max-height:820px;object-fit:cover}
+.team{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:32px}
+.contact{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:center}
+.ci{display:grid;gap:0}
+.ci div{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid var(--line);font-size:15px}
+.ci b{text-align:right}
+footer{background:#0b2727;color:#a9c3bf;font-size:13px;padding:28px max(5vw,16px) 96px;text-align:center}
+.dock{position:fixed;left:12px;right:12px;bottom:12px;z-index:30;display:none;gap:10px}
+.dock a{flex:1}
+.zalo{background:#0068ff;color:#fff}
+dialog{border:0;border-radius:20px;padding:0;max-width:min(760px,94vw);width:100%;background:var(--card);color:var(--ink)}
+dialog::backdrop{background:rgba(6,25,24,.6)}
+.dl .ph{border-radius:0;aspect-ratio:16/9}
+.dl .tx{padding:22px 24px 26px}
+.dl dl{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:8px 18px;margin:18px 0 0;font-size:15px}
+.dl dt{color:var(--mute)}
+.dl dd{margin:0;font-weight:500}
+.x{position:absolute;top:12px;right:12px;width:44px;height:44px;border-radius:50%;border:0;background:rgba(0,0,0,.55);color:#fff;font-size:22px;cursor:pointer}
+.dawn{position:relative;min-height:440px;display:grid;place-items:center;overflow:hidden;color:#fff;text-align:center}
+.dawn img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.dawn::after{content:"";position:absolute;inset:0;background:rgba(10,30,30,.35)}
+.dawn .in{position:relative;z-index:1;max-width:640px;padding:48px 20px}
+.dawn .q{font-family:"Playfair Display",serif;font-style:italic;font-size:clamp(40px,6vw,68px);line-height:1.05;margin-bottom:16px}
+.dawn p{font-size:17px}
+.v360{position:relative;margin-top:28px;border-radius:18px;overflow:hidden;aspect-ratio:16/9;background:#0b2727}
+.v360 img,.v360 iframe{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0}
+.v360::after{content:"";position:absolute;inset:0;background:rgba(8,30,29,.35);pointer-events:none}
+.v360.live::after{display:none}
+.play{text-decoration:none;position:absolute;z-index:1;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;gap:6px;background:rgba(10,35,34,.7);backdrop-filter:blur(6px);color:#fff;border:1px solid rgba(233,211,166,.6);border-radius:20px;padding:20px 28px;font:600 15px "Be Vietnam Pro",sans-serif;cursor:pointer}
+.play span{font-family:"Playfair Display",serif;font-size:40px;color:#e9d3a6;line-height:1}
+@media(max-width:600px){.v360{aspect-ratio:3/4}}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s ease}
+.rv.on{opacity:1;transform:none}
+@media(max-width:900px){.views{grid-template-columns:repeat(2,minmax(0,1fr))}.views .card,.views .card.w{grid-column:span 1}.units{grid-template-columns:repeat(2,minmax(0,1fr))}.calc{grid-template-columns:1fr}nav .links{display:none}}
+@media(max-width:720px){.two,.contact,.team{grid-template-columns:1fr}.times{grid-template-columns:1fr}.dock{display:flex}nav .btn{display:none}}
+@media(max-width:480px){.units{grid-template-columns:1fr}.views{grid-template-columns:1fr}.facts{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<nav id="nav">
+  <a class="logo" href="#top">PRIMA BAY</a>
+  <div class="links"><a href="#tongquan">Tổng quan</a><a href="#vitri">Vị trí</a><a href="#canho">Căn hộ</a><a href="#tinhgia">Tính giá</a><a href="#v360">360°</a><a href="#tienich">Tiện ích</a><a href="#matbang">Mặt bằng</a></div>
+  <a class="btn gold" href="#lienhe">Nhận bảng giá</a>
+</nav>
+
+<header class="hero" id="top">
+  <img class="bgimg" src="img/pb-img-07_1_pb_birdview_tu_hqv.webp" alt="Phối cảnh Prima Bay bên vịnh Hạ Long lúc bình minh">
+  <div class="in">
+    <div class="kick">Căn hộ nghỉ dưỡng · Halong Marina, Bãi Cháy</div>
+    <h1>Prima Bay, sống phong cách Ý <em>bên vịnh di sản</em></h1>
+    <p class="sub">Cửa ngõ Bán đảo 1 Halong Marina, tầm nhìn 270° ôm trọn vịnh Hạ Long, hồ nhạc nước và bến du thuyền.</p>
+    <div class="cta"><a class="btn gold" href="#tinhgia">Tính giá căn hộ</a><a class="btn ghost" href="#canho">Xem các loại căn</a></div>
+    <div class="stats">
+      <div><b data-n="1.69" data-d="2" data-s=" tỷ">1,69 tỷ</b><span>Studio chỉ từ</span></div>
+      <div><b data-n="270" data-s="°">270°</b><span>Tầm nhìn vịnh</span></div>
+      <div><b data-n="2969">2.969</b><span>Căn hộ, 2 tòa 30 tầng</span></div>
+      <div><b data-n="80" data-s="+">80+</b><span>Tiện ích, 12 hồ bơi &amp; mặt nước</span></div>
+      <div><b data-n="16" data-s="%">16%</b><span>Chiết khấu tối đa + Early Bird 1%</span></div>
+    </div>
+    <p class="note">Hình ảnh phối cảnh minh họa của chủ đầu tư. Giá tham khảo tháng 11/2026.</p>
+  </div>
+</header>
+
+<section class="band" id="tongquan">
+  <div class="wrap two">
+    <div class="rv">
+      <div class="kick">Tổng quan dự án</div>
+      <h2>Prima dell’alba, đến trước bình minh</h2>
+      <p class="lead">Tọa lạc tại cửa ngõ Bán đảo 1 Halong Marina, Prima Bay không chỉ nhìn thẳng ra vịnh di sản mà còn là điểm khởi đầu của dòng khách, dòng tiền và nhịp sống của cả khu đô thị vịnh biển.</p>
+      <div class="facts">
+        <div><b>1,64 ha</b><span>Quy mô dự án</span></div>
+        <div><b>30 + 2</b><span>Tầng nổi + tầng hầm, 2 tòa P &amp; M</span></div>
+        <div><b>83,02%</b><span>Căn Studio, tối ưu khai thác cho thuê</span></div>
+        <div><b>Lâu dài</b><span>Đất thương mại dịch vụ</span></div>
+      </div>
+    </div>
+    <div class="ph rv" style="aspect-ratio:4/5"><img src="img/tongquan.webp" alt="Tổng thể hai tòa tháp Prima Bay" loading="lazy"></div>
+  </div>
+</section>
+
+<section class="band dark" id="vitri">
+  <div class="wrap two">
+    <div class="ph rv" style="aspect-ratio:16/11"><img src="img/vitri.webp" alt="Vị trí Prima Bay trên đường Hoàng Quốc Việt, Halong Marina" loading="lazy"></div>
+    <div class="rv">
+      <div class="kick">Vị trí &amp; kết nối</div>
+      <h2>Cửa ngõ Bán đảo 1 Halong Marina</h2>
+      <p class="lead">Mặt đường Hoàng Quốc Việt, phường Bãi Cháy, Quảng Ninh. Mọi tiện ích của Halong Marina chỉ trong vài phút đi bộ.</p>
+      <div class="times">
+        <div>Hồ nhạc nước<b>2 phút</b></div><div>Bến du thuyền<b>2 phút</b></div>
+        <div>Quảng trường biển<b>2 phút</b></div><div>InterContinental Halong Bay<b>2 phút</b></div>
+        <div>TTTM Lotte Mart Hạ Long<b>2 phút</b></div><div>Công viên &amp; sân thể thao<b>3 phút</b></div>
+        <div>Cầu cảnh quan biểu tượng<b>3 phút</b></div><div>Vịnh di sản Hạ Long<b>Trước mặt</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="view">
+  <div class="wrap">
+    <div class="rv"><div class="kick">Tầm nhìn đa lớp</div><h2>5 hướng view, chọn đúng gu và ngân sách</h2>
+    <p class="lead">Tòa P nằm phía tây, tòa M phía đông. Mỗi mặt nhìn ra một khung cảnh khác nhau, từ vịnh biển đến sân trong xanh mát.</p></div>
+    <div class="views">
+      <article class="card rv w"><div class="ph"><img src="img/pb-img-09_pb_tam_view_ben_du_thuyen_1.webp" alt="View vịnh Hạ Long" loading="lazy"></div><div class="tx"><h3>View vịnh Hạ Long</h3><p>Hướng nhìn đắt giá nhất: mặt vịnh di sản và bến du thuyền ngay trước mắt.</p></div></article>
+      <article class="card rv w"><div class="ph"><img src="img/v-ho.webp" alt="View hồ nhạc nước" loading="lazy"></div><div class="tx"><h3>View hồ nhạc nước</h3><p>Các căn mặt đông tòa M nhìn thẳng hồ nhạc nước, xem trình diễn mỗi tối từ ban công.</p></div></article>
+      <article class="card rv"><div class="ph"><img src="img/pb-img-10_pb_view_be_boi_2_toa.webp" alt="View nội khu" loading="lazy"></div><div class="tx"><h3>View nội khu</h3><p>Hướng sân trong và hồ bơi tầng 5, yên tĩnh, mức giá mềm nhất.</p></div></article>
+      <article class="card rv"><div class="ph"><img src="img/pb-img-06_pb_cong_chao.webp" alt="View Hoàng Quốc Việt" loading="lazy"></div><div class="tx"><h3>View Hoàng Quốc Việt</h3><p>Mặt bắc thoáng, nhìn đại lộ Hoàng Quốc Việt và núi phía sau.</p></div></article>
+      <article class="card rv"><div class="ph"><img src="img/v-ql18.webp" alt="View Quốc lộ 18" loading="lazy"></div><div class="tx"><h3>View Quốc lộ 18</h3><p>Mặt tây tòa P, một số căn góc bắt được góc chéo ra vịnh.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="band dark" id="kientruc">
+  <div class="wrap two">
+    <div class="rv">
+      <div class="kick">Kiến trúc Ý</div>
+      <h2>Thiết kế bởi Mercurio Design Lab, Roma</h2>
+      <p class="lead">Studio kiến trúc, nội thất và cảnh quan thành lập năm 2008 tại Roma, thành viên AMA Group, tập đoàn kiến trúc hơn 50 năm lịch sử ở châu Âu. Hai tòa tháp chữ L đối xứng như cánh cửa mở ra vịnh.</p>
+      <div class="facts">
+        <div><b>BIM Land</b><span>Chủ đầu tư</span></div>
+        <div><b>BIM Estates</b><span>Quản lý vận hành</span></div>
+      </div>
+    </div>
+    <div class="ph rv" style="aspect-ratio:16/10"><img src="img/kientruc.webp" alt="Kiến trúc Prima Bay" loading="lazy"></div>
+  </div>
+</section>
+
+<section class="dawn">
+  <img src="img/binhminh.webp" alt="" loading="lazy">
+  <div class="in rv"><p class="q">Prima dell’alba</p><p>Thời khắc trước bình minh, khi mặt vịnh còn tĩnh lặng. Khoảnh khắc của những người đến sớm hơn, nhìn xa hơn và chọn đúng vị trí trước khi thế giới thức giấc.</p></div>
+</section>
+
+<section class="band" id="tiendo" style="padding-bottom:0">
+  <div class="wrap two">
+    <div class="ph rv" style="aspect-ratio:16/9"><img src="img/pb-khoi-dong.webp" alt="Lễ khởi động dự án Prima Bay ngày 26/05/2026" loading="lazy"></div>
+    <div class="rv"><div class="kick">Tiến độ</div><h2>Đã khởi động ngày 26/05/2026</h2><p class="lead">BIM Land tổ chức lễ khởi động dự án Prima Bay tại Khu đô thị Halong Marina. Tiến độ thi công cập nhật, đội tư vấn gửi kèm ảnh thực tế qua Zalo.</p></div>
+  </div>
+</section>
+
+<section class="band dark" id="v360">
+  <div class="wrap">
+    <div class="rv"><div class="kick">Tham quan 360°</div><h2>Xoay 360° quanh dự án, xem view từng hướng</h2>
+    <p class="lead">Kéo để xoay, chụm hai ngón để phóng to. Xem trước vịnh, hồ nhạc nước và bến du thuyền nhìn từ Prima Bay.</p></div>
+    <div class="v360" id="v360box">
+      <img src="img/pb-img-08_1_pb_birdview_tu_vinh.webp" alt="Xem 360 độ dự án Prima Bay" loading="lazy">
+      <button type="button" class="play" id="v360btn"><span>360°</span>Bấm để xem 360</button>
+    </div>
+    <div class="cta"><a class="btn gold" href="https://primabay360-viewer.vercel.app/" target="_blank" rel="noopener">Mở 360 toàn màn hình</a></div>
+  </div>
+</section>
+
+<section class="band" id="canho">
+  <div class="wrap">
+    <div class="rv"><div class="kick">Loại căn &amp; giá tham khảo</div><h2>Từ Studio 1,69 tỷ, thiết kế chuẩn khách sạn</h2>
+    <p class="lead">Giá "từ" là giá niêm yết thấp nhất đang còn trong giỏ hàng (gồm VAT, trước chiết khấu). Bấm vào từng loại để xem chi tiết.</p></div>
+    <div class="units" id="units"></div>
+  </div>
+</section>
+
+<section class="band" id="tinhgia" style="padding-top:0">
+  <div class="wrap">
+    <div class="rv"><div class="kick">Chính sách bán hàng</div><h2>Tự tính giá theo 5 phương thức thanh toán</h2>
+    <p class="lead">Mọi phương thức đều được cộng Early Bird 1%. Giá hợp đồng đã gồm VAT 10% và kinh phí bảo trì 2%.</p></div>
+    <div class="calc">
+      <div class="panel rv">
+        <label for="preset">Chọn căn mẫu</label>
+        <select id="preset">
+          <option value="1692482080">Studio rẻ nhất · M2-12A-25</option>
+          <option value="2869679422">2PN rẻ nhất · M2-16-24</option>
+          <option value="3057961223" selected>2PN tầng 30 · P2-30-18 (56,86 m²)</option>
+          <option value="">Tự nhập giá khác</option>
+        </select>
+        <label for="price">Giá niêm yết (gồm VAT, đồng)</label>
+        <input type="text" id="price" inputmode="numeric" value="3.057.961.223">
+        <label class="chk"><input type="checkbox" id="ref"> Có người giới thiệu (giảm thêm 2%)</label>
+        <p class="note">Số liệu tạm tính theo công thức phiếu tính giá của chủ đầu tư, xác nhận chính thức khi ký hợp đồng. Tiết kiệm tính so với giá niêm yết cộng kinh phí bảo trì.</p>
+      </div>
+      <div class="meth rv" id="meth"></div>
+    </div>
+  </div>
+</section>
+
+<section class="band dark" id="tienich">
+  <div class="wrap">
+    <div class="rv"><div class="kick">Tiện ích</div><h2>80+ tiện ích nghỉ dưỡng trong hai tòa tháp</h2>
+    <p class="lead">12 hồ bơi và mặt nước, 3,2 ha cảnh quan nội khu, hồ bơi vô cực tầng 5 và Prima Club House.</p></div>
+    <div class="amen" id="amen"></div>
+    <div class="arrows"><button type="button" id="prev" aria-label="Ảnh trước">←</button><button type="button" id="next" aria-label="Ảnh sau">→</button></div>
+    <div class="alist" id="alist"></div>
+  </div>
+</section>
+
+<section class="band" id="matbang">
+  <div class="wrap">
+    <div class="rv"><div class="kick">Hai tòa tháp</div><h2>Tòa P phía tây, tòa M phía đông</h2>
+    <p class="lead">Hai tòa chữ L đối xứng như cánh cửa mở ra vịnh, mỗi tòa 30 tầng nổi với hồ bơi vô cực tầng 5. Mặt bằng chi tiết từng tầng và vị trí căn, đội tư vấn gửi qua Zalo.</p></div>
+    <div class="tabs" role="tablist"><button type="button" role="tab" aria-selected="true" data-p="p">Tòa P</button><button type="button" role="tab" aria-selected="false" data-p="m">Tòa M</button></div>
+    <div class="plan"><img id="planimg" src="img/toa-p.webp" alt="Phối cảnh tòa P" loading="lazy"></div>
+    <div class="cta"><a class="btn gold" href="https://zalo.me/0829980198">Nhận mặt bằng chi tiết qua Zalo</a></div>
+  </div>
+</section>
+
+<section class="band dark" id="lienhe">
+  <div class="wrap contact">
+    <div class="ph rv" style="aspect-ratio:16/11"><img src="img/sanh.webp" alt="Sảnh đón tiếp Prima Bay" loading="lazy"></div>
+    <div class="rv">
+      <div class="kick">Tư vấn &amp; bảng giá</div>
+      <h2>Nhận bảng giá mới nhất và căn đẹp còn trống</h2>
+      <p class="lead">Nhắn Zalo hoặc gọi trực tiếp, đội tư vấn gửi bảng hàng, phiếu tính giá và vị trí từng căn trên mặt bằng.</p>
+      <div class="ci" style="margin-top:20px">
+        <div><span>Đội tư vấn</span><b>Team Việt Hoàng</b></div>
+        <div><span>Hotline / Zalo</span><b>0829 980 198</b></div>
+        <div><span>Dự án</span><b>Prima Bay, Halong Marina, Bãi Cháy</b></div>
+        <div><span>Chủ đầu tư</span><b>BIM Land</b></div>
+      </div>
+      <div class="cta"><a class="btn gold" href="tel:0829980198">Gọi 0829 980 198</a><a class="btn zalo" href="https://zalo.me/0829980198">Chat Zalo</a><a class="btn ghost" href="https://www.primabay.vn">Website chủ đầu tư</a></div>
+    </div>
+  </div>
+</section>
+
+<footer>Trang thông tin do Team Việt Hoàng (đội tư vấn bán hàng) thực hiện, không phải website chính thức của chủ đầu tư. Hình ảnh phối cảnh từ chủ đầu tư, mang tính minh họa. Giá và chính sách tham khảo tại thời điểm 11/2026, có thể thay đổi.</footer>
+
+<div class="dock"><a class="btn gold" href="tel:0829980198">Gọi ngay</a><a class="btn zalo" href="https://zalo.me/0829980198">Chat Zalo</a></div>
+
+<dialog id="dlg"><div class="dl" id="dlgc"></div><button class="x" type="button" id="dlgx" aria-label="Đóng">×</button></dialog>
+
+<script>
+{
+const vnd=n=>Math.round(n).toLocaleString('vi-VN');
+const ty=n=>(n/1e9).toLocaleString('vi-VN',{maximumFractionDigits:2})+' tỷ';
+const U=[
+ {k:'Studio',a:'30 – 42 m²',p:1692482080,img:'img/studio.webp',d:'Chiếm hơn 83% quỹ căn, bố trí chuẩn phòng khách sạn, tối ưu cho thuê lưu trú ngắn ngày.',fit:'Nhà đầu tư cho thuê ngắn hạn, mua nghỉ dưỡng cuối tuần'},
+ {k:'Studio+',a:'37 – 46 m²',p:2090000000,img:'img/ban-cong-bien.webp',d:'Studio diện tích rộng, đủ chỗ tách khu ngủ và khu sinh hoạt linh hoạt.',fit:'Cặp đôi, khách lưu trú dài ngày, cho thuê giá cao hơn Studio'},
+ {k:'2 phòng ngủ',a:'57 – 72 m²',p:2869679422,img:'img/pb-img-05_pb_tam_view_huong_vinh_1.webp',d:'Căn gia đình, có căn góc tới 72 m² với nhiều mặt thoáng.',fit:'Gia đình nhỏ, cho thuê dài hạn hoặc theo nhóm'},
+ {k:'3 phòng ngủ',a:'96 – 105 m²',p:6560000000,img:'img/pb-img-08_1_pb_birdview_tu_vinh.webp',d:'Số lượng rất ít, không gian sống rộng cho gia đình nhiều thế hệ.',fit:'Gia đình lớn, khách mua để ở và nghỉ dưỡng'}
+];
+const M=[['Thanh toán sớm 95%',.16,'Đợt 1: 10% trong 7 ngày làm việc sau đặt cọc, đợt 2: 85% sau đó 20 ngày'],['Thanh toán sớm 50%',.12,'50% sớm, phần còn lại chia đợt tới bàn giao'],['Thanh toán sớm 30%',.08,'Đợt 1 đóng 30%, các đợt sau mỗi đợt 5%'],['Thanh toán theo tiến độ',.05,'Chia 14 đợt theo tiến độ, đợt lớn nhất 25% khi bàn giao'],['Vay ngân hàng',0,'Vay tới 70%, hỗ trợ lãi suất tới 65% trong 30 tháng']];
+document.getElementById('units').innerHTML=U.map((u,i)=>`<button type="button" class="card rv" data-i="${i}"><div class="ph"><img src="${u.img}" alt="Nội thất căn ${u.k}" loading="lazy"></div><div class="tx"><h3>${u.k}</h3><p>${u.a}</p><div class="price">Giá chỉ từ<b>${ty(u.p)}</b></div><span class="more">Xem chi tiết →</span></div></button>`).join('');
+const dlg=document.getElementById('dlg');
+document.getElementById('units').addEventListener('click',e=>{const b=e.target.closest('[data-i]');if(!b)return;const u=U[+b.dataset.i];const base=u.p/1.1*.84*.99*1.12;
+ document.getElementById('dlgc').innerHTML=`<div class="ph"><img src="${u.img}" alt="Căn ${u.k}"></div><div class="tx"><h3>Căn ${u.k}</h3><p class="lead" style="margin-top:8px">${u.d}</p><dl><dt>Diện tích</dt><dd>${u.a} (thông thủy)</dd><dt>Giá niêm yết từ</dt><dd>${ty(u.p)} (gồm VAT)</dd><dt>Thanh toán sớm 95%</dt><dd>khoảng ${ty(base)} (gồm VAT, bảo trì)</dd><dt>Phù hợp</dt><dd>${u.fit}</dd><dt>Hướng view</dt><dd>Biển, hồ nhạc nước, nội khu, Hoàng Quốc Việt hoặc QL18 tùy căn</dd></dl><div class="cta"><a class="btn gold" href="https://zalo.me/0829980198">Nhận bảng hàng ${u.k}</a></div></div>`;
+ dlg.showModal();});
+document.getElementById('dlgx').onclick=()=>dlg.close();
+dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
+const pr=document.getElementById('price'),ps=document.getElementById('preset'),rf=document.getElementById('ref'),me=document.getElementById('meth');
+const calc=()=>{const L=+pr.value.replace(/\D/g,'')||0;const pre=L/1.1;const ref=rf.checked?.98:1;const full=L+pre*.02;
+ me.innerHTML=M.map((m,i)=>{const t=pre*(1-m[1])*.99*ref*1.12;const sv=full-t;return `<div class="m${i?'':' best'}"><div><h4>${m[0]}${i?'':'<span class="tag">Giá tốt nhất</span>'}</h4><div class="ck">Chiết khấu ${m[1]*100}% + Early Bird 1%${rf.checked?' + giới thiệu 2%':''}</div><div class="ck">${m[2]}</div></div><div><div class="tot">${L?vnd(t)+' đ':'–'}</div><div class="sv">${L&&sv>0?'Tiết kiệm ≈ '+vnd(sv/1e6)+' triệu':''}</div></div></div>`}).join('');};
+ps.onchange=()=>{if(ps.value){pr.value=vnd(+ps.value)}else{pr.value='';pr.focus()}calc()};
+pr.oninput=()=>{const d=pr.value.replace(/\D/g,'');pr.value=d?vnd(+d):'';calc()};
+rf.onchange=calc;calc();
+const A=[['be_boi','Hồ bơi vô cực tầng 5'],['jacuzzi','Bể sục Jacuzzi'],['san_choi_nuoc_playground','Sân chơi nước trẻ em'],['nha_hang_cafe','Nhà hàng, Café'],['coworking_space_thu_vien','Co-working &amp; thư viện'],['atrium_garden','Atrium garden'],['vuon_dao_bo_canh_quan','Vườn dạo bộ cảnh quan'],['bbq_outdoor','BBQ ngoài trời'],['khu_chieu_phim_ngoai_troi','Rạp chiếu phim ngoài trời'],['choi_vong_canh','Chòi vọng cảnh']];
+const am=document.getElementById('amen');
+am.innerHTML=A.map(a=>`<figure><img src="img/pb-noikhu-${a[0]}.webp" alt="" loading="lazy"><figcaption>${a[1]}</figcaption></figure>`).join('');
+document.getElementById('alist').innerHTML=['Atrium garden','Media room','Khu vui chơi gia đình','Food court','Rạp chiếu phim ngoài trời','Khu giặt là tự động','Pantry ướt, event studio','Co-working, thư viện','Khu đọc sách semi outdoor','Bể bơi','Jacuzzi','Sân chơi nước','Nhà hàng, Café','Vườn dạo bộ','BBQ outdoor','Chòi vọng cảnh','Vườn thiền yoga'].map(x=>`<span>${x}</span>`).join('');
+const step=d=>am.scrollBy({left:d*(am.firstElementChild.offsetWidth+16),behavior:'smooth'});
+document.getElementById('prev').onclick=()=>step(-1);document.getElementById('next').onclick=()=>step(1);
+am.tabIndex=0;am.addEventListener('keydown',e=>{if(e.key==='ArrowRight')step(1);if(e.key==='ArrowLeft')step(-1)});
+const pl=document.getElementById('planimg');
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.setAttribute('aria-selected',x===b));pl.src='img/toa-'+b.dataset.p+'.webp';pl.alt='Phối cảnh tòa '+b.dataset.p.toUpperCase()});
+const vb=document.getElementById('v360box');
+const vbtn=document.getElementById('v360btn');if(/claude/.test(location.hostname)){vbtn.outerHTML='<a class="play" href="https://primabay360-viewer.vercel.app/"><span>360°</span>Bấm để xem 360</a>'}else vbtn.onclick=()=>{vb.innerHTML='<iframe src="https://primabay360-viewer.vercel.app/" title="Prima Bay 360" allow="fullscreen; accelerometer; gyroscope" allowfullscreen></iframe>';vb.classList.add('live')};
+const nav=document.getElementById('nav');const onS=()=>nav.classList.toggle('solid',scrollY>60);addEventListener('scroll',onS,{passive:true});onS();
+const red=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>red?el.classList.add('on'):io.observe(el));
+setTimeout(()=>document.querySelectorAll('.rv').forEach(el=>el.classList.add('on')),4000);
+if(!red)document.querySelectorAll('.stats b').forEach(b=>{const n=+b.dataset.n,d=+(b.dataset.d||0),s=b.dataset.s||'';const t0=performance.now();const f=t=>{const k=Math.min(1,(t-t0)/1600),v=n*(1-(1-k)**3);b.textContent=v.toLocaleString('vi-VN',{minimumFractionDigits:d,maximumFractionDigits:d})+s;if(k<1)requestAnimationFrame(f)};requestAnimationFrame(f)});
+}
+</script>
+</body>
+</html>
