@@ -140,6 +140,10 @@ dialog::backdrop{background:rgba(6,25,24,.6)}
 .play{text-decoration:none;position:absolute;z-index:1;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;gap:6px;background:rgba(10,35,34,.7);backdrop-filter:blur(6px);color:#fff;border:1px solid rgba(233,211,166,.6);border-radius:20px;padding:20px 28px;font:600 15px "Be Vietnam Pro",sans-serif;cursor:pointer}
 .play span{font-family:"Playfair Display",serif;font-size:40px;color:#e9d3a6;line-height:1}
 @media(max-width:600px){.v360{aspect-ratio:3/4}}
+.adv{display:flex;align-items:center;gap:18px;margin-top:24px;padding:16px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.04)}
+.adv img{width:96px;height:96px;border-radius:50%;object-fit:cover;object-position:50% 20%;border:2px solid #e9d3a6;flex:none}
+.adv b{display:block;font-family:"Playfair Display",serif;font-size:24px;font-weight:500;color:#e9d3a6}
+.adv span{display:block;font-size:14px;color:var(--mute)}
 .rv{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s ease}
 .rv.on{opacity:1;transform:none}
 @media(max-width:900px){.views{grid-template-columns:repeat(2,minmax(0,1fr))}.views .card,.views .card.w{grid-column:span 1}.units{grid-template-columns:repeat(2,minmax(0,1fr))}.calc{grid-template-columns:1fr}nav .links{display:none}}
@@ -318,6 +322,7 @@ dialog::backdrop{background:rgba(6,25,24,.6)}
       <div class="kick">Tư vấn &amp; bảng giá</div>
       <h2>Nhận bảng giá mới nhất và căn đẹp còn trống</h2>
       <p class="lead">Nhắn Zalo hoặc gọi trực tiếp, đội tư vấn gửi bảng hàng, phiếu tính giá và vị trí từng căn trên mặt bằng.</p>
+      <div class="adv"><img id="advImg" src="img/viet-hoang.webp" alt="Việt Hoàng, tư vấn dự án Prima Bay" loading="lazy"><div><b id="advName2">Việt Hoàng</b><span>Tư vấn dự án Prima Bay · Team Việt Hoàng</span><span>Hỗ trợ xem căn, gửi bảng giá và phiếu tính giá qua Zalo</span></div></div>
       <div class="ci" style="margin-top:20px">
         <div><span>Chuyên viên tư vấn</span><b id="advName">Việt Hoàng</b></div>
         <div><span>Đội tư vấn</span><b>Team Việt Hoàng</b></div>
@@ -371,12 +376,12 @@ const pl=document.getElementById('planimg');
 document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.setAttribute('aria-selected',x===b));pl.src='img/toa-'+b.dataset.p+'.webp';pl.alt='Phối cảnh tòa '+b.dataset.p.toUpperCase()});
 const vb=document.getElementById('v360box');
 const vbtn=document.getElementById('v360btn');if(/claude/.test(location.hostname)){vbtn.outerHTML='<a class="play" href="https://primabay360-viewer.vercel.app/"><span>360°</span>Bấm để xem 360</a>'}else vbtn.onclick=()=>{vb.innerHTML='<iframe src="https://primabay360-viewer.vercel.app/" title="Prima Bay 360" allow="fullscreen; accelerometer; gyroscope" allowfullscreen></iframe>';vb.classList.add('live')};
-const NS={hoang:['Việt Hoàng','0829980198'],duc:['Phạm Đức','0838011995'],long:['Việt Long','0353473733'],thaiha:['Thái Hà','0933161888']};
+const NS={hoang:['Việt Hoàng','0829980198','img/viet-hoang.webp'],duc:['Phạm Đức','0838011995'],long:['Việt Long','0353473733'],thaiha:['Thái Hà','0933161888']};
 const nsKey=(new URLSearchParams(location.search).get('ns')||'').toLowerCase();
 const ADV=NS[nsKey]||NS.hoang;
 const fmt=p=>p.replace(/^(\d{4})(\d{3})(\d{3})$/,'$1 $2 $3');
 const swap=root=>{root.querySelectorAll('a[href*="0829980198"]').forEach(a=>{a.href=a.href.replace('0829980198',ADV[1]);a.innerHTML=a.innerHTML.replace('0829 980 198',fmt(ADV[1]))});};
-if(ADV!==NS.hoang){document.querySelectorAll('.ci b').forEach(b=>{if(b.textContent.trim()==='0829 980 198')b.textContent=fmt(ADV[1])});document.getElementById('advName').textContent=ADV[0];swap(document);new MutationObserver(()=>swap(document.getElementById('dlgc'))).observe(document.getElementById('dlgc'),{childList:true});}
+if(ADV!==NS.hoang){document.querySelectorAll('.ci b').forEach(b=>{if(b.textContent.trim()==='0829 980 198')b.textContent=fmt(ADV[1])});document.getElementById('advName').textContent=ADV[0];document.getElementById('advName2').textContent=ADV[0];const ai=document.getElementById('advImg');if(ADV[2])ai.src=ADV[2];else ai.remove();swap(document);new MutationObserver(()=>swap(document.getElementById('dlgc'))).observe(document.getElementById('dlgc'),{childList:true});}
 const nav=document.getElementById('nav');const onS=()=>nav.classList.toggle('solid',scrollY>60);addEventListener('scroll',onS,{passive:true});onS();
 const red=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.12});
