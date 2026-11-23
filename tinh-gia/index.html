@@ -100,6 +100,15 @@ tr.ded td{color:#9aa7a4}
 @keyframes pulse{from{transform:scale(.5);opacity:1}to{transform:scale(1.6);opacity:0}}
 @media(prefers-reduced-motion:reduce){.dot::after{animation:none}}
 @media(max-width:700px){.loc{grid-template-columns:1fr}}
+.gal{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:14px}
+.gal figure{margin:0;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.gal a.im{display:block;aspect-ratio:4/3;overflow:hidden;background:#e9eeec}
+.gal img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.gal a.im:hover img{transform:scale(1.04)}
+.gal figcaption{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 12px;font-size:14px;font-weight:500}
+.gal figcaption a{font-size:13px;color:var(--teal);font-weight:600;white-space:nowrap;text-decoration:none}
+@media(max-width:900px){.gal{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:500px){.gal{grid-template-columns:1fr}}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:var(--deep);color:#fff;padding:10px 18px;border-radius:999px;font-weight:600;transition:.25s;z-index:60;max-width:90vw;text-align:center}
 .toast.on{transform:translateX(-50%) translateY(0)}
 #gate{position:fixed;inset:0;background:var(--deep);z-index:80;display:grid;place-items:center;padding:20px}
@@ -129,7 +138,7 @@ tr.ded td{color:#9aa7a4}
   <div class="wrap">
     <div class="top"><h1>Prima Bay · Bảng hàng &amp; tính giá</h1><div class="me" id="me"></div></div>
     <div class="kpis" id="kpis"></div>
-    <div class="tabs" role="tablist"><button role="tab" aria-selected="true" data-tab="hang">Bảng hàng</button><button role="tab" aria-selected="false" data-tab="gia">Tính giá</button></div>
+    <div class="tabs" role="tablist"><button role="tab" aria-selected="true" data-tab="hang">Bảng hàng</button><button role="tab" aria-selected="false" data-tab="gia">Tính giá</button><button role="tab" aria-selected="false" data-tab="tq">Tổng quan</button></div>
   </div>
 </header>
 
@@ -162,6 +171,10 @@ tr.ded td{color:#9aa7a4}
       </div>
     </div>
     <div id="calc"><div class="empty">Nhập mã căn ở trên, hoặc bấm vào một căn trong tab Bảng hàng.</div></div>
+  </section>
+  <section id="tab-tq" hidden>
+    <div class="panel"><h2>Ảnh tổng quan dự án</h2><div style="font-size:13px;color:var(--mute);margin-top:4px">Ảnh phối cảnh chính thức của CĐT. Bấm ảnh để xem lớn, bấm "Lưu ảnh" để tải về gửi khách.</div></div>
+    <div class="gal" id="gal"></div>
   </section>
 </main>
 <div class="toast" id="toast"></div>
@@ -216,7 +229,10 @@ $('#more').onclick=()=>{st.n+=60;renderList()};
 $('#q').oninput=e=>{st.q=e.target.value;st.n=60;renderList()};
 $('#sort').onchange=e=>{st.sort=e.target.value;renderList()};
 
-function tab(t){document.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===t));$('#tab-hang').hidden=t!=='hang';$('#tab-gia').hidden=t!=='gia';scrollTo({top:0})}
+let galDone=false;
+async function gal(){if(galDone)return;galDone=true;const L=await (await fetch('/data/tongquan.json')).json();
+ $('#gal').innerHTML=L.map(([f,c])=>`<figure><a class="im" href="/img/tongquan/${f}.webp" target="_blank" rel="noopener"><img src="/img/tongquan/${f}.webp" alt="${c}" loading="lazy"></a><figcaption><span>${c}</span><a href="/img/tongquan/${f}.webp" download="prima-bay-${f}.webp">Lưu ảnh</a></figcaption></figure>`).join('')}
+function tab(t){document.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===t));$('#tab-hang').hidden=t!=='hang';$('#tab-gia').hidden=t!=='gia';$('#tab-tq').hidden=t!=='tq';if(t==='tq')gal();scrollTo({top:0})}
 document.querySelector('.tabs').onclick=e=>{const b=e.target.closest('button');if(b)tab(b.dataset.tab)};
 
 function openUnit(c){cur=U.find(u=>u.c===c);if(!cur)return;$('#code').value=c;tab('gia');calc()}
