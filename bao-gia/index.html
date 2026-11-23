@@ -41,6 +41,8 @@ h2{font-size:17px;margin:0 0 8px}
 .dock{position:fixed;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));display:flex;gap:10px;z-index:9;max-width:796px;margin:0 auto}
 .btn{flex:1;border:0;border-radius:999px;min-height:50px;font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;text-decoration:none}
 .gold{background:var(--gold);color:#1a2b2a}.zalo{background:var(--zalo);color:#fff}
+.locf{margin:0;position:relative;border-radius:12px;overflow:hidden}.locf img{display:block;width:100%}
+.dot{position:absolute;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:#e0261b;border:2px solid #fff;box-shadow:0 0 0 2px #e0261b}
 .fine{font-size:12px;color:var(--mute);margin-top:16px}
 .err{text-align:center;padding:80px 20px;color:var(--mute)}
 </style>
@@ -68,6 +70,7 @@ const adv=PB_TEAM[(q.get('ns')||'').toLowerCase()]||PB_TEAM.hoang;
   app.innerHTML=`<header class="hero"><img src="/img/pb-img-07_1_pb_birdview_tu_hqv.webp" alt="Prima Bay Hạ Long"><div class="in"><div class="k">Prima Bay · Halong Marina, Bãi Cháy</div><h1>Báo giá căn ${u.c}</h1><div>${u.k} · Tòa ${u.t} · Tầng ${u.f} · ${u.a} m² thông thủy${u.v?' · View '+u.v:''}</div></div></header>
   <div class="wrap">
    <div class="card big"><div><span>${p.m.name}${p.rf?' + ưu đãi giới thiệu 2%':''}</span><b>${F.vnd(p.total)} đ</b><span>Tổng giá trị hợp đồng (đã gồm VAT và kinh phí bảo trì)</span></div><div style="text-align:right"><span>Tiết kiệm so với giá niêm yết</span><b style="font-size:20px;color:#2f7d5f">≈ ${F.tr(base-p.total)}</b></div></div>
+   ${u.loc?`<div class="card"><h2>Vị trí căn trên dự án</h2><figure class="locf"><img src="/img/chican/${u.loc[2]}.webp" alt="Vị trí căn ${u.c}"><i class="dot" style="left:${u.loc[0]*100}%;top:${u.loc[1]*100}%"></i></figure><div style="font-size:12px;color:var(--mute);margin-top:6px">Chấm đỏ: vị trí tương đối của căn trên phối cảnh, mang tính minh họa.</div></div>`:''}
    <div class="card"><h2>Chi tiết giá</h2><table>
     <tr><td>Giá niêm yết (gồm VAT)</td><td class="r">${F.vnd(p.list)}</td></tr>
     <tr><td>Giá chưa VAT</td><td class="r">${F.vnd(p.pre)}</td></tr>

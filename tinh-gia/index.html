@@ -91,6 +91,15 @@ tr.ded td{color:#9aa7a4}
 .inv .kv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
 .inv .kv div{background:#f6f4ef;border-radius:12px;padding:10px}
 .inv .kv span{display:block;font-size:12px;color:var(--mute)}.inv .kv b{font-size:16px;white-space:nowrap}
+.loc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:14px;margin-top:10px}
+.loc figure{margin:0;position:relative;border-radius:12px;overflow:hidden;background:#e9eeec}
+.loc figure img{display:block;width:100%;height:auto}
+.loc figcaption{font-size:12px;color:var(--mute);padding:6px 2px}
+.dot{position:absolute;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:#e0261b;border:2px solid #fff;box-shadow:0 0 0 2px #e0261b}
+.dot::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:2px solid #e0261b;animation:pulse 1.6s ease-out infinite}
+@keyframes pulse{from{transform:scale(.5);opacity:1}to{transform:scale(1.6);opacity:0}}
+@media(prefers-reduced-motion:reduce){.dot::after{animation:none}}
+@media(max-width:700px){.loc{grid-template-columns:1fr}}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:var(--deep);color:#fff;padding:10px 18px;border-radius:999px;font-weight:600;transition:.25s;z-index:60;max-width:90vw;text-align:center}
 .toast.on{transform:translateX(-50%) translateY(0)}
 #gate{position:fixed;inset:0;background:var(--deep);z-index:80;display:grid;place-items:center;padding:20px}
@@ -247,12 +256,17 @@ function calc(){
     <div class="warn">Số liệu tạm tính theo phiếu tính giá của CĐT, bảng hàng cập nhật ${DB.updated.split('-').reverse().join('/')}. Xác nhận căn còn hàng trước khi chốt.</div>
    </div>
   </div>
+  <div class="panel sec"><h3 style="font-size:16px">Vị trí căn</h3>${locHtml(u)}</div>
   <div class="panel inv sec" id="inv"></div>`;
   document.querySelectorAll('.meth').forEach(b=>b.onclick=()=>{mid=b.dataset.m;calc()});
   $('#cp').onclick=()=>copy(summary(u,p,rows),'Đã chép tóm tắt, dán vào Zalo cho khách');
   $('#lk').onclick=()=>copy(qlink(u,p),'Đã chép link báo giá, gửi cho khách qua Zalo');
   inv(u);
 }
+const PLAN={M:'plan_M_typical',P:'plan_P_typical'};
+function locHtml(u){const L=u.loc;const plan=u.t==='P'&&u.f==='05'?'plan_P_floor5':PLAN[u.t];
+ return `<div class="loc">${L?`<figure><img src="/img/chican/${L[2]}.webp" alt="Vị trí căn ${u.c} trên phối cảnh"><i class="dot" style="left:${L[0]*100}%;top:${L[1]*100}%"></i><figcaption>Chấm đỏ: vị trí tương đối của căn ${u.c} (tầng ${u.f}) trên phối cảnh.</figcaption></figure>`:''}
+ <figure><a href="/img/chican/${plan}.webp" target="_blank" rel="noopener"><img src="/img/chican/${plan}.webp" alt="Mặt bằng tòa ${u.t}" loading="lazy"></a><figcaption>Mặt bằng ${u.t==='P'&&u.f==='05'?'tầng 5':'tầng điển hình'} tòa ${u.t}: tìm nhãn ${u.c.replace(/-\w+-/,'-'+(u.t==='P'&&u.f==='05'?'05':'xx')+'-')} trên mặt bằng. Bấm để phóng to.</figcaption></figure></div>`}
 function summary(u,p,rows){const m=T[ME]||T.hoang;
   return `PRIMA BAY HẠ LONG - BÁO GIÁ CĂN ${u.c}\n${u.k} · Tòa ${u.t} · Tầng ${u.f} · ${u.a} m² · View ${u.v||'-'}\nGiá niêm yết: ${F.vnd(u.p)} đ (gồm VAT)\nPhương thức: ${p.m.name}${p.rf?' + giới thiệu 2%':''}\nTổng giá trị HĐ: ${F.vnd(p.total)} đ (đã gồm VAT + bảo trì)\n\nLịch thanh toán:\n${rows.filter(r=>!r.ded).map(r=>`- ${r.n}: ${F.vnd(r.amt)} đ${r.date?' ('+F.date(r.date)+')':' (theo thông báo)'}`).join('\n')}\n\nXem chi tiết: ${qlink(u,p)}\nTư vấn: ${m.name} - ${F.phone(m.phone)}`}
 function qlink(u,p){const q=new URLSearchParams({c:u.c,m:p.m.id});if(p.rf)q.set('r','1');q.set('d',$('#d0').value||new Date().toISOString().slice(0,10));if(ttdc()!==1e8)q.set('tt',ttdc()/1e6);if(ME&&ME!=='hoang')q.set('ns',ME);return location.origin+'/bao-gia/?'+q}
