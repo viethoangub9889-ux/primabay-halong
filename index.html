@@ -126,6 +126,7 @@ select:focus,input:focus,.btn:focus-visible,button:focus-visible{outline:2px sol
 .ci{display:grid;gap:0}
 .ci div{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid var(--line);font-size:15px}
 .ci b{text-align:right}
+.xlink{background:#f3efe6;color:#0f2e2e;padding:clamp(36px,5vw,64px) max(5vw,16px)}.xlink .in{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:clamp(20px,4vw,48px);align-items:center}.xlink img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:16px}.xlink .k{font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#4f6a67}.xlink h3{font-size:clamp(28px,3.4vw,40px);margin:8px 0 10px}.xlink p{color:#4f6a67;max-width:520px}.xlink a.btn{margin-top:18px;background:#14403f;color:#fff}@media(max-width:720px){.xlink .in{grid-template-columns:1fr}}
 footer{background:#0b2727;color:#a9c3bf;font-size:13px;padding:28px max(5vw,16px) 96px;text-align:center}
 .dock{position:fixed;left:12px;right:12px;bottom:12px;z-index:30;display:none;gap:10px}
 .dock a{flex:1}
@@ -360,6 +361,14 @@ dialog::backdrop{background:rgba(6,25,24,.6)}
     </div>
   </div>
 </section>
+
+<section class="xlink" aria-label="Dự án khác">
+  <div class="in">
+    <img src="https://www.ariabay.com.vn/_next/image?url=%2Fbuilding%2Fdesktop_background11.jpg&amp;w=1200&amp;q=75" alt="Tháp đôi Aria Bay bên vịnh Hạ Long" loading="lazy">
+    <div><div class="k">Dự án khác của Team Việt Hoàng</div><h3>Aria Bay, Bán đảo 3</h3><p>Tháp đôi Sol &amp; Mi 40 tầng của BIM Land tại Bán đảo 3 Halong Marina. Ba mặt hướng biển, 100% căn nhìn vịnh, hồ hoặc phố.</p><a class="btn js-xlink" href="https://viethoangub9889-ux.github.io/ariabay-halong/">Xem dự án Aria Bay</a></div>
+  </div>
+</section>
+<script>{const n=new URLSearchParams(location.search).get('ns');if(n)document.querySelectorAll('.js-xlink').forEach(a=>{const u=new URL(a.href);u.searchParams.set('ns',n);a.href=u})}</script>
 
 <footer>Trang thông tin do Team Việt Hoàng (đội tư vấn bán hàng) thực hiện, không phải website chính thức của chủ đầu tư. Hình ảnh phối cảnh từ chủ đầu tư, mang tính minh họa. Giá và chính sách tham khảo tại thời điểm 11/2026, có thể thay đổi.</footer>
 
