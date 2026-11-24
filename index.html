@@ -391,12 +391,12 @@ const pl=document.getElementById('planimg');
 document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.setAttribute('aria-selected',x===b));pl.src='img/toa-'+b.dataset.p+'.webp';pl.alt='Phối cảnh tòa '+b.dataset.p.toUpperCase()});
 const vb=document.getElementById('v360box');
 const vbtn=document.getElementById('v360btn');if(/claude/.test(location.hostname)){vbtn.outerHTML='<a class="play" href="https://primabay360-viewer.vercel.app/"><span>360°</span>Bấm để xem 360</a>'}else vbtn.onclick=()=>{vb.innerHTML='<iframe src="https://primabay360-viewer.vercel.app/" title="Prima Bay 360" allow="fullscreen; accelerometer; gyroscope" allowfullscreen></iframe>';vb.classList.add('live')};
-const NS={hoang:['Việt Hoàng','0829980198','img/viet-hoang.webp'],duc:['Phạm Đức','0838011995'],long:['Việt Long','0353473733'],thaiha:['Thái Hà','0933161888']};
+const NS={hoang:['Việt Hoàng','0829980198','img/viet-hoang.webp'],duc:['Phạm Đức','0838011995'],long:['Việt Long','0353473733','img/viet-long.webp'],thaiha:['Thái Hà','0933161888','img/thai-ha.webp']};
 const nsKey=(new URLSearchParams(location.search).get('ns')||'').toLowerCase();
 const ADV=NS[nsKey]||NS.hoang;
 const fmt=p=>p.replace(/^(\d{4})(\d{3})(\d{3})$/,'$1 $2 $3');
 const swap=root=>{root.querySelectorAll('a[href*="0829980198"]').forEach(a=>{a.href=a.href.replace('0829980198',ADV[1]);a.innerHTML=a.innerHTML.replace('0829 980 198',fmt(ADV[1]))});};
-if(ADV!==NS.hoang){document.querySelectorAll('.ci b').forEach(b=>{if(b.textContent.trim()==='0829 980 198')b.textContent=fmt(ADV[1])});document.getElementById('advName').textContent=ADV[0];document.getElementById('advName2').textContent=ADV[0];const ai=document.getElementById('advImg');if(ADV[2])ai.src=ADV[2];else{ai.remove();document.querySelector('.adv').classList.add('noimg')}swap(document);new MutationObserver(()=>swap(document.getElementById('dlgc'))).observe(document.getElementById('dlgc'),{childList:true});}
+if(ADV!==NS.hoang){document.querySelectorAll('.ci b').forEach(b=>{if(b.textContent.trim()==='0829 980 198')b.textContent=fmt(ADV[1])});document.getElementById('advName').textContent=ADV[0];document.getElementById('advName2').textContent=ADV[0];const ai=document.getElementById('advImg');if(ADV[2]){ai.src=ADV[2];ai.alt=ADV[0]+', tư vấn dự án Prima Bay'}else{ai.remove();document.querySelector('.adv').classList.add('noimg')}swap(document);new MutationObserver(()=>swap(document.getElementById('dlgc'))).observe(document.getElementById('dlgc'),{childList:true});}
 const nav=document.getElementById('nav');const onS=()=>nav.classList.toggle('solid',scrollY>60);addEventListener('scroll',onS,{passive:true});onS();
 const red=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.12});
