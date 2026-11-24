@@ -1,0 +1,21 @@
+{
+ "name": "Tính giá Prima Bay",
+ "short_name": "Tính giá PB",
+ "start_url": "./",
+ "display": "standalone",
+ "background_color": "#0f2e2e",
+ "theme_color": "#0f2e2e",
+ "icons": [
+  {
+   "src": "icons/tinhgia-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "icons/tinhgia-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any maskable"
+  }
+ ]
+}
