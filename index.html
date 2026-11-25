@@ -173,6 +173,7 @@ dialog::backdrop{background:rgba(6,25,24,.6)}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
 @media(max-width:720px){.hero .in{padding-bottom:96px}.hero{min-height:auto}}
 .dock{transition:transform .35s,opacity .35s}.dock.dock-hide{transform:translateY(130%);opacity:0;pointer-events:none}
+.js-share{font-family:inherit;cursor:pointer}.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#1c2526;color:#fff;padding:12px 18px;border-radius:12px;font-size:14px;z-index:60;opacity:0;transition:opacity .3s;max-width:90vw;text-align:center}.toast.on{opacity:1}
 </style>
 </head>
 <body>
@@ -188,7 +189,7 @@ dialog::backdrop{background:rgba(6,25,24,.6)}
     <div class="kick">Căn hộ nghỉ dưỡng · Halong Marina, Bãi Cháy</div>
     <h1>Prima Bay, sống phong cách Ý <em>bên vịnh di sản</em></h1>
     <p class="sub">Cửa ngõ Bán đảo 1 Halong Marina, tầm nhìn 270° ôm trọn vịnh Hạ Long, hồ nhạc nước và bến du thuyền.</p>
-    <div class="cta"><a class="btn gold" href="#tinhgia">Tính giá căn hộ</a><a class="btn ghost" href="#canho">Xem các loại căn</a></div>
+    <div class="cta"><a class="btn gold" href="#tinhgia">Tính giá căn hộ</a><a class="btn ghost" href="#canho">Xem các loại căn</a><button type="button" class="btn ghost js-share">↗ Chia sẻ dự án</button></div>
     <div class="stats">
       <div><b data-n="1.69" data-d="2" data-s=" tỷ">1,69 tỷ</b><span>Studio chỉ từ</span></div>
       <div><b data-n="270" data-s="°">270°</b><span>Tầm nhìn vịnh</span></div>
@@ -365,7 +366,7 @@ dialog::backdrop{background:rgba(6,25,24,.6)}
         <div><span>Dự án</span><b>Prima Bay, Halong Marina, Bãi Cháy</b></div>
         <div><span>Chủ đầu tư</span><b>BIM Land</b></div>
       </div>
-      <div class="cta"><a class="btn gold" href="tel:0829980198">Gọi 0829 980 198</a><a class="btn zalo" href="https://zalo.me/0829980198">Chat Zalo</a><a class="btn ghost" href="https://www.primabay.vn">Website chủ đầu tư</a></div>
+      <div class="cta"><a class="btn gold" href="tel:0829980198">Gọi 0829 980 198</a><a class="btn zalo" href="https://zalo.me/0829980198">Chat Zalo</a><a class="btn ghost" href="https://www.primabay.vn">Website chủ đầu tư</a><button type="button" class="btn ghost js-share">↗ Chia sẻ dự án</button></div>
     </div>
   </div>
 </section>
@@ -435,5 +436,6 @@ if(!red)document.querySelectorAll('.stats b').forEach(b=>{const n=+b.dataset.n,d
 }
 </script>
 <script>{const d=document.querySelector(".dock"),h=document.querySelector(".hero");if(d&&h){const f=()=>d.classList.toggle("dock-hide",scrollY<h.offsetHeight-innerHeight*0.6);addEventListener("scroll",f,{passive:true});addEventListener("resize",f);f()}}</script>
+<script>{const T="Prima Bay Hạ Long",X="Prima Bay Hạ Long: tháp đôi P & M 30 tầng ở cửa ngõ Bán đảo 1 Halong Marina, kế bên hồ nhạc nước Halo Bay Show. Xem tổng quan, loại căn, 360° và bảng tính giá:";const toast=m=>{let t=document.querySelector(".toast");if(!t){t=document.createElement("div");t.className="toast";document.body.appendChild(t)}t.textContent=m;t.classList.add("on");clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove("on"),2600)};document.querySelectorAll(".js-share").forEach(b=>b.addEventListener("click",async()=>{const u=location.origin+location.pathname+location.search;if(navigator.share){try{await navigator.share({title:T,text:X,url:u});return}catch(e){if(e.name==="AbortError")return}}try{await navigator.clipboard.writeText(X+" "+u);toast("Đã sao chép link dự án, dán vào Zalo để gửi khách")}catch(e){prompt("Sao chép link này:",u)}}))}</script>
 </body>
 </html>
