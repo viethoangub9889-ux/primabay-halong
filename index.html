@@ -418,7 +418,7 @@ const pl=document.getElementById('planimg');
 document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.setAttribute('aria-selected',x===b));pl.src='img/toa-'+b.dataset.p+'.webp';pl.alt='Phối cảnh tòa '+b.dataset.p.toUpperCase()});
 const vb=document.getElementById('v360box');
 const vbtn=document.getElementById('v360btn');if(/claude/.test(location.hostname)){vbtn.outerHTML='<a class="play" href="https://primabay360-viewer.vercel.app/"><span>360°</span>Bấm để xem 360</a>'}else vbtn.onclick=()=>{vb.innerHTML='<iframe src="https://primabay360-viewer.vercel.app/" title="Prima Bay 360" allow="fullscreen; accelerometer; gyroscope" allowfullscreen></iframe>';vb.classList.add('live')};
-const NS={hoang:['Việt Hoàng','0829980198','img/viet-hoang.webp'],duc:['Phạm Đức','0838011995'],long:['Việt Long','0353473733','img/viet-long.webp'],thaiha:['Thái Hà','0933161888','img/thai-ha.webp']};
+const NS={hoang:['Việt Hoàng','0829980198','img/viet-hoang.webp'],duc:['Phạm Đức','0838011995'],long:['Việt Long','0353473733','img/viet-long.webp'],thaiha:['Thái Hà','0933161888','img/thai-ha.webp'],trung:['Đào Quang Trung','0976982240'],maichi:['Phạm Mai Chi','0375247858']};
 const nsKey=(new URLSearchParams(location.search).get('ns')||'').toLowerCase();
 const ADV=NS[nsKey]||NS.hoang;
 const fmt=p=>p.replace(/^(\d{4})(\d{3})(\d{3})$/,'$1 $2 $3');
