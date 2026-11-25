@@ -171,6 +171,8 @@ dialog::backdrop{background:rgba(6,25,24,.6)}
 @media(max-width:720px){.two,.contact,.team{grid-template-columns:1fr}.times{grid-template-columns:1fr}.dock{display:flex}nav .btn{display:none}}
 @media(max-width:480px){.units{grid-template-columns:1fr}.views{grid-template-columns:1fr}.facts{grid-template-columns:1fr 1fr}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+@media(max-width:720px){.hero .in{padding-bottom:96px}.hero{min-height:auto}}
+.dock{transition:transform .35s,opacity .35s}.dock.dock-hide{transform:translateY(130%);opacity:0;pointer-events:none}
 </style>
 </head>
 <body>
@@ -432,5 +434,6 @@ setTimeout(()=>document.querySelectorAll('.rv').forEach(el=>el.classList.add('on
 if(!red)document.querySelectorAll('.stats b').forEach(b=>{const n=+b.dataset.n,d=+(b.dataset.d||0),s=b.dataset.s||'';const t0=performance.now();const f=t=>{const k=Math.min(1,(t-t0)/1600),v=n*(1-(1-k)**3);b.textContent=v.toLocaleString('vi-VN',{minimumFractionDigits:d,maximumFractionDigits:d})+s;if(k<1)requestAnimationFrame(f)};requestAnimationFrame(f)});
 }
 </script>
+<script>{const d=document.querySelector(".dock"),h=document.querySelector(".hero");if(d&&h){const f=()=>d.classList.toggle("dock-hide",scrollY<h.offsetHeight-innerHeight*0.6);addEventListener("scroll",f,{passive:true});addEventListener("resize",f);f()}}</script>
 </body>
 </html>
