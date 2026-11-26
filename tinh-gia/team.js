@@ -7,7 +7,7 @@ window.PB_TEAM={
   trung:{name:'Đào Quang Trung',phone:'0976982240',h:'8f3cd2a1c72be697155f3637f13faeda8f54689c75292689694110379b64e99d'},
   maichi:{name:'Phạm Mai Chi',phone:'0375247858',h:'9a13147eaabcc3d4caf7ff68f2959f3047506fbbcb573f9804d5c7d3dccbcdfc'},
   linh:{name:'Linh Lê',phone:'0936994345',img:'../img/linh-le.webp',h:'3d66ef41690737593f9dd9f55d0901facf9220d1619306fea724d86e77b6c5a9'},
-  cuc:{name:'Kim Cúc',phone:'0793386930',h:'13729c14cfd5c75b25f830df5bb26a06e6cd6306cfbeb9ff44d1ac209cff653c'}
+  cuc:{name:'Kim Cúc',phone:'0793386930',img:'../img/kim-cuc.webp',h:'13729c14cfd5c75b25f830df5bb26a06e6cd6306cfbeb9ff44d1ac209cff653c'}
 };
 window.PB_FMT={
   vnd:n=>Math.round(n).toLocaleString('vi-VN'),
