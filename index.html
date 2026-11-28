@@ -174,6 +174,10 @@ dialog::backdrop{background:rgba(6,25,24,.6)}
 @media(max-width:720px){.hero .in{padding-bottom:96px}.hero{min-height:auto}}
 .dock{transition:transform .35s,opacity .35s}.dock.dock-hide{transform:translateY(130%);opacity:0;pointer-events:none}
 .js-share{font-family:inherit;cursor:pointer}.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#1c2526;color:#fff;padding:12px 18px;border-radius:12px;font-size:14px;z-index:60;opacity:0;transition:opacity .3s;max-width:90vw;text-align:center}.toast.on{opacity:1}
+.qgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-top:24px}.qc{text-align:left;font:inherit;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;cursor:pointer;display:flex;flex-direction:column;gap:4px}.qc:hover{border-color:var(--gold)}.qc b{font-size:20px;color:var(--teal)}.qc .m{font-size:13px;color:var(--mute)}.qc .pr{font-size:17px;font-weight:600;margin-top:6px}.qc .tag{align-self:flex-start;font-size:11px;padding:2px 8px;border-radius:99px;background:var(--teal);color:#fff;margin-bottom:4px}
+.qd{position:fixed;inset:0;z-index:99;background:rgba(8,24,24,.65);display:flex;align-items:flex-start;justify-content:center;overflow:auto;padding:16px}.qd[hidden]{display:none}.qbox{position:relative;background:var(--card);color:var(--ink);border-radius:18px;max-width:760px;width:100%;margin:auto;padding:20px}.qx{position:absolute;top:10px;right:10px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(0,0,0,.08);font-size:26px;cursor:pointer;color:inherit}
+.qbox img{width:100%;border-radius:12px;display:block;margin:12px 0}.qbox h3{font-size:26px;margin:0 40px 4px 0}.qinfo{color:var(--mute);font-size:14px}.qm{width:100%;border-collapse:collapse;margin-top:10px;font-size:15px}.qm td{padding:10px 6px;border-top:1px solid var(--line)}.qm td:last-child{text-align:right;font-weight:600;white-space:nowrap}.qm small{display:block;color:var(--mute);font-size:12px;font-weight:400}.qchk{display:flex;gap:8px;align-items:center;margin-top:12px;font-size:15px}.qbtn{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+@media(max-width:720px){.qgrid{grid-template-columns:1fr 1fr;gap:8px}.qc{padding:12px}.qc b{font-size:16px}.qc .pr{font-size:15px}}
 </style>
 </head>
 <body>
@@ -308,6 +312,15 @@ dialog::backdrop{background:rgba(6,25,24,.6)}
   </div>
 </section>
 
+<section class="band" id="quy" hidden>
+  <div class="wrap">
+    <div class="rv"><div class="kick">Quỹ căn độc quyền</div><h2>Căn đẹp đang giữ riêng cho khách của đội</h2>
+    <p class="lead">Bấm vào từng căn để xem vị trí chỉ căn và giá theo 5 phương thức thanh toán.</p></div>
+    <div class="qgrid" id="qgrid"></div>
+    <p class="note">Giá niêm yết gồm VAT, theo bảng hàng quỹ độc quyền ngày 28/11/2026. Giá theo phương thức tính theo phiếu tính giá của CĐT: trừ Early Bird 1% và chiết khấu phương thức; tổng hợp đồng gồm VAT 10% và kinh phí bảo trì 2%. Căn có thể đã có khách giữ, nhắn tư vấn để kiểm tra trước. Số liệu tạm tính, xác nhận chính thức khi ký hợp đồng.</p>
+  </div>
+</section>
+<div class="qd" id="qd" hidden><div class="qbox"><button type="button" class="qx" aria-label="Đóng">×</button><div id="qdc"></div></div></div>
 <section class="band" id="tinhgia" style="padding-top:0">
   <div class="wrap">
     <div class="rv"><div class="kick">Chính sách bán hàng</div><h2>Tự tính giá theo 5 phương thức thanh toán</h2>
@@ -421,7 +434,7 @@ const pl=document.getElementById('planimg');
 document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.setAttribute('aria-selected',x===b));pl.src='img/toa-'+b.dataset.p+'.webp';pl.alt='Phối cảnh tòa '+b.dataset.p.toUpperCase()});
 const vb=document.getElementById('v360box');
 const vbtn=document.getElementById('v360btn');if(/claude/.test(location.hostname)){vbtn.outerHTML='<a class="play" href="https://primabay360-viewer.vercel.app/"><span>360°</span>Bấm để xem 360</a>'}else vbtn.onclick=()=>{vb.innerHTML='<iframe src="https://primabay360-viewer.vercel.app/" title="Prima Bay 360" allow="fullscreen; accelerometer; gyroscope" allowfullscreen></iframe>';vb.classList.add('live')};
-const NS={hoang:['Việt Hoàng','0829980198','img/viet-hoang.webp'],duc:['Phạm Đức','0838011995'],long:['Việt Long','0353473733','img/viet-long.webp'],thaiha:['Thái Hà','0933161888','img/thai-ha.webp'],trung:['Đào Quang Trung','0976982240'],maichi:['Phạm Mai Chi','0375247858'],linh:['Linh Lê','0936994345','img/linh-le.webp',1],cuc:['Kim Cúc','0793386930','img/kim-cuc.webp',1]};
+const NS={hoang:['Việt Hoàng','0829980198','img/viet-hoang.webp'],duc:['Phạm Đức','0838011995'],long:['Việt Long','0353473733','img/viet-long.webp'],thaiha:['Thái Hà','0933161888','img/thai-ha.webp'],trung:['Đào Quang Trung','0976982240'],maichi:['Phạm Mai Chi','0375247858'],linh:['Linh Lê','0936994345','img/linh-le.webp',1],cuc:['Kim Cúc','0793386930','img/kim-cuc.webp',1],thuy:['Minh Thuý','0338652529']};
 const nsKey=(new URLSearchParams(location.search).get('ns')||'').toLowerCase();
 const ADV=NS[nsKey]||NS.hoang;
 if(ADV[3]){document.querySelectorAll('span,b').forEach(e=>{if(e.children.length===0&&e.textContent.trim()==='Team Việt Hoàng'){const r=e.parentElement;(e.tagName==='B'&&r&&r.children.length===2?r:e).remove()}});const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let t;while(t=w.nextNode()){if(t.nodeValue.includes('Team Việt Hoàng'))t.nodeValue=t.nodeValue.replace('Dự án khác của Team Việt Hoàng','Dự án khác').replace('Team Việt Hoàng (đội tư vấn bán hàng)','đội tư vấn bán hàng').replace('Team Việt Hoàng','đội tư vấn')}}
@@ -438,5 +451,21 @@ if(!red)document.querySelectorAll('.stats b').forEach(b=>{const n=+b.dataset.n,d
 </script>
 <script>{const d=document.querySelector(".dock"),h=document.querySelector(".hero");if(d&&h){const f=()=>d.classList.toggle("dock-hide",scrollY<h.offsetHeight-innerHeight*0.6);addEventListener("scroll",f,{passive:true});addEventListener("resize",f);f()}}</script>
 <script>{const T="Prima Bay Hạ Long",X="Prima Bay Hạ Long: tháp đôi P & M 30 tầng ở cửa ngõ Bán đảo 1 Halong Marina, kế bên hồ nhạc nước Halo Bay Show. Xem tổng quan, loại căn, 360° và bảng tính giá:";const toast=m=>{let t=document.querySelector(".toast");if(!t){t=document.createElement("div");t.className="toast";document.body.appendChild(t)}t.textContent=m;t.classList.add("on");clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove("on"),2600)};document.querySelectorAll(".js-share").forEach(b=>b.addEventListener("click",async()=>{const u=location.origin+location.pathname+location.search;if(navigator.share){try{await navigator.share({title:T,text:X,url:u});return}catch(e){if(e.name==="AbortError")return}}try{await navigator.clipboard.writeText(X+" "+u);toast("Đã sao chép link dự án, dán vào Zalo để gửi khách")}catch(e){prompt("Sao chép link này:",u)}}))}</script>
+<script>{const Q=[{"c": "P1-08-16", "k": "2PN", "a": 70.4, "p": 4571086923, "v": "Vịnh Hạ Long, bến du thuyền"}, {"c": "P1-09-08", "k": "Studio", "a": 30.74, "p": 2037010388, "v": "Vịnh Hạ Long, bến du thuyền"}, {"c": "P1-12-15", "k": "3PN", "a": 95.92, "p": 6310904284, "v": "Vịnh Hạ Long, bến du thuyền"}, {"c": "P2-09-24", "k": "Studio", "a": 31.85, "p": 1732333110, "v": "Thành phố & đồi"}, {"c": "P2-20-29", "k": "Studio", "a": 31.52, "p": 1780022329, "v": "Thành phố & đồi"}];
+const OK=["","hoang","duc","long","trung","maichi","thuy"],key=(new URLSearchParams(location.search).get("ns")||"").toLowerCase();
+if(OK.includes(key)){const sec=document.getElementById("quy");sec.hidden=false;
+const ty=n=>(n/1e9).toLocaleString("vi-VN",{minimumFractionDigits:2,maximumFractionDigits:2})+" tỷ",vnd=n=>Math.round(n).toLocaleString("vi-VN")+" đ";
+const g=document.getElementById("qgrid");
+g.innerHTML=Q.map((u,i)=>`<button type="button" class="qc" data-i="${i}"><span class="tag">View ${u.v}</span><b>${u.c}</b><span class="m">${u.k} · ${u.a.toLocaleString("vi-VN")} m²</span><span class="pr">${ty(u.p)}</span><span class="m">Giá niêm yết gồm VAT</span></button>`).join("");
+const d=document.getElementById("qd"),dc=document.getElementById("qdc");
+const M=[["Thanh toán sớm 95%","CK 16%",.16],["Thanh toán sớm 50%","CK 12%",.12],["Thanh toán sớm 30%","CK 8%",.08],["Thanh toán tiến độ","CK 5%",.05],["Vay ngân hàng","Vay tối đa 70%, HTLS 65% trong 30 tháng",0]];
+const draw=(u,ref)=>{const b=Math.round(u.p/1.1),z=document.querySelector(".dock .zalo"),t=document.querySelector(".dock a[href^='tel:']");
+const rows=M.map(m=>{const v=b*.99*(1-m[2])*(ref?.98:1)*1.12;return `<tr><td>${m[0]}<small>${m[1]} + Early Bird 1%</small></td><td>${vnd(v)}<small>${ty(v)}</small></td></tr>`}).join("");
+dc.innerHTML=`<h3>${u.c}</h3><div class="qinfo">${u.k} · ${u.a.toLocaleString("vi-VN")} m² thông thủy · View ${u.v}</div><img src="img/quy/${u.c.toLowerCase()}.webp" alt="Chỉ căn ${u.c} Prima Bay"><div class="qinfo">Giá niêm yết (gồm VAT): <b>${vnd(u.p)}</b></div><table class="qm"><tr><td><b>Tổng giá trị hợp đồng</b><small>gồm VAT 10% + KPBT 2%</small></td><td></td></tr>${rows}</table><label class="qchk"><input type="checkbox" id="qref" ${ref?"checked":""}> Có người giới thiệu (giảm thêm 2%)</label><div class="qbtn"><a class="btn zalo" href="${z?z.href:"#lienhe"}">Nhắn Zalo giữ căn ${u.c}</a><a class="btn ghost" href="${t?t.href:"#lienhe"}">Gọi tư vấn</a></div>`;
+dc.querySelector("#qref").onchange=e=>draw(u,e.target.checked)};
+const close=()=>{if(d.hidden)return;d.hidden=true;document.body.style.overflow="";if(history.state&&history.state.qd)history.back()};
+g.querySelectorAll(".qc").forEach(c=>c.onclick=()=>{draw(Q[+c.dataset.i],false);d.hidden=false;document.body.style.overflow="hidden";d.scrollTop=0;try{history.pushState({qd:1},"")}catch(e){}});
+d.querySelector(".qx").onclick=close;d.onclick=e=>{if(e.target===d)close()};addEventListener("popstate",()=>{d.hidden=true;document.body.style.overflow=""});addEventListener("keydown",e=>{if(e.key==="Escape")close()});
+const nl=document.querySelector('.links a[href="#canho"]');if(nl){const x=nl.cloneNode(true);x.href="#quy";x.textContent="Quỹ căn";nl.after(x)}}}</script>
 </body>
 </html>
