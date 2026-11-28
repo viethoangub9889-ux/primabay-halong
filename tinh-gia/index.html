@@ -165,7 +165,8 @@ tr.ded td{color:#9aa7a4}
         <div><label class="f" for="q">Tìm mã căn</label><input type="search" id="q" placeholder="VD: M2-12A-25, P1-15"></div>
         <div><label class="f" for="sort">Sắp xếp</label><select id="sort"><option value="p">Giá thấp → cao</option><option value="-p">Giá cao → thấp</option><option value="c">Theo mã căn</option><option value="a">Diện tích nhỏ → lớn</option></select></div>
       </div>
-      <div class="row" style="margin-top:12px" id="fKind"></div>
+      <div class="row" style="margin-top:12px" id="fX" hidden></div>
+      <div class="row" style="margin-top:8px" id="fKind"></div>
       <div class="row" style="margin-top:8px" id="fTower"></div>
       <div class="row" style="margin-top:8px" id="fView"></div>
     </div>
@@ -214,9 +215,11 @@ let ME=null;
 const VCLS={'Biển & bến du thuyền':'v-bien','Hồ nhạc nước':'v-ho','Hoàng Quốc Việt':'v-hqv','QL18 chéo biển':'v-ql','Nội khu':'v-nk'};
 const vtag=v=>v?`<span class="tag ${VCLS[v]||''}">${v}</span>`:'<span class="tag">Chưa có view</span>';
 const KINDS=['Studio','Studio+','2PN','3PN'];
-let U=[],DB={},st={k:'',t:'',v:'',q:'',sort:'p',n:60},cur=null,mid='95';
+const XQ=[{"c": "P1-08-16", "t": "P", "f": "08", "k": "2PN", "a": 70.4, "p": 4571086923, "v": "Biển & bến du thuyền"}, {"c": "P1-09-08", "t": "P", "f": "09", "k": "Studio", "a": 30.74, "p": 2037010388, "v": "Nội khu"}, {"c": "P1-12-15", "t": "P", "f": "12", "k": "3PN", "a": 95.92, "p": 6310904284, "v": "Biển & bến du thuyền"}, {"c": "P2-09-24", "t": "P", "f": "09", "k": "Studio", "a": 31.85, "p": 1732333110, "v": "Hoàng Quốc Việt"}, {"c": "P2-20-29", "t": "P", "f": "20", "k": "Studio", "a": 31.52, "p": 1780022329, "v": "Hoàng Quốc Việt"}],XOK=['hoang','duc','long','trung','maichi','thuy'];
+let U=[],DB={},st={x:'',k:'',t:'',v:'',q:'',sort:'p',n:60},cur=null,mid='95';
 
-function setMe(key){ME=key;const m=T[key];$('#me').innerHTML=`${m.name} · ${F.phone(m.phone)} <button type="button" id="logout">Đổi người</button>`;$('#logout').onclick=()=>{store.set('pb_sale','');location.reload()}}
+function addX(){if(!ME||!XOK.includes(ME)||!U.length||U.some(u=>u.x))return;XQ.forEach(x=>{if(!U.some(u=>u.c===x.c))U.push(Object.assign({x:1},x))});$('#codes').innerHTML=U.map(u=>`<option value="${u.c}">`).join('');filters();renderList()}
+function setMe(key){ME=key;setTimeout(addX,0);const m=T[key];$('#me').innerHTML=`${m.name} · ${F.phone(m.phone)} <button type="button" id="logout">Đổi người</button>`;$('#logout').onclick=()=>{store.set('pb_sale','');location.reload()}}
 async function gate(){
   const k=store.get('pb_sale');if(k&&T[k]){setMe(k);return}
   $('#gate').hidden=false;$('#gatePhone').focus();
@@ -230,8 +233,9 @@ function kpis(){const s=U.filter(u=>u.k==='Studio');const min=k=>Math.min(...U.f
   $('#kpis').innerHTML=`<div><b>${U.length}</b><span>căn còn bán</span></div><div><b>${F.ty(min('Studio'))}</b><span>Studio rẻ nhất</span></div><div><b>${F.ty(min('2PN'))}</b><span>2PN rẻ nhất</span></div><div><b>${DB.updated.split('-').reverse().join('/')}</b><span>cập nhật bảng hàng</span></div>`}
 function chips(el,key,opts){el.innerHTML=opts.map(([v,l])=>`<button type="button" class="chip" data-v="${v}" aria-pressed="${st[key]===v}">${l}</button>`).join('');
   el.onclick=e=>{const b=e.target.closest('.chip');if(!b)return;st[key]=b.dataset.v;st.n=60;filters();renderList()}}
-function cnt(o){return U.filter(u=>(!o.k||u.k===o.k)&&(!o.t||u.t===o.t)&&(!o.v||u.v===o.v)).length}
+function cnt(o){return U.filter(u=>(!st.x||u.x)&&(!o.k||u.k===o.k)&&(!o.t||u.t===o.t)&&(!o.v||u.v===o.v)).length}
 function filters(){
+  if(U.some(u=>u.x)){$('#fX').hidden=false;chips($('#fX'),'x',[['','Toàn bộ giỏ hàng'],['1','★ Quỹ độc quyền · '+U.filter(u=>u.x).length]])}
   const c=(over)=>cnt(Object.assign({k:st.k,t:st.t,v:st.v},over));
   chips($('#fKind'),'k',[['','Tất cả loại · '+c({k:''})],...KINDS.map(k=>[k,k+' · '+c({k})])]);
   chips($('#fTower'),'t',[['','Cả 2 tòa · '+c({t:''})],['P','Tòa P · '+c({t:'P'})],['M','Tòa M · '+c({t:'M'})]]);
@@ -240,12 +244,12 @@ function filters(){
   document.querySelectorAll('.chip').forEach(b=>{if(/ · 0$/.test(b.textContent))b.classList.add('zero')});
 }
 function filtered(){const q=st.q.toUpperCase().replace(/\s/g,'');
-  let r=U.filter(u=>(!st.k||u.k===st.k)&&(!st.t||u.t===st.t)&&(!st.v||u.v===st.v)&&(!q||u.c.includes(q)));
+  let r=U.filter(u=>(!st.x||u.x)&&(!st.k||u.k===st.k)&&(!st.t||u.t===st.t)&&(!st.v||u.v===st.v)&&(!q||u.c.includes(q)));
   const s=st.sort,d=s[0]==='-'?-1:1,k=s.replace('-','');
   return r.sort((a,b)=>k==='c'?a.c.localeCompare(b.c,undefined,{numeric:true}):(a[k]-b[k])*d)}
 function cheap(){const pool=U.filter(u=>(!st.t||u.t===st.t)&&(!st.v||u.v===st.v));
   $('#cheap').innerHTML=KINDS.map(k=>{const x=pool.filter(u=>u.k===k).sort((a,b)=>a.p-b.p)[0];return x?`<button type="button" data-c="${x.c}"><small>${k} rẻ nhất${st.v?' · '+st.v:''}</small><b>${x.c}</b><span class="p">${F.ty(x.p)}</span></button>`:''}).join('')}
-function card(u){return `<button type="button" class="u" data-c="${u.c}"><div class="h"><span class="c">${u.c}</span><span class="p">${F.ty(u.p)}</span></div><div class="m">${u.k} · Tòa ${u.t} · Tầng ${u.f} · ${u.a} m²</div><div>${vtag(u.v)}</div></button>`}
+function card(u){return `<button type="button" class="u" data-c="${u.c}"><div class="h"><span class="c">${u.c}${u.x?' <span class="tag" style="background:#c8a66a;color:#fff">★ Độc quyền</span>':''}</span><span class="p">${F.ty(u.p)}</span></div><div class="m">${u.k} · Tòa ${u.t} · Tầng ${u.f} · ${u.a} m²</div><div>${vtag(u.v)}</div></button>`}
 function emptyMsg(){const k=st.k||'căn',v=st.v;return `<div class="empty">Hiện không còn ${k}${v?' view '+v:''}${st.t?' ở tòa '+st.t:''} trong giỏ hàng.<br>Bấm các nút có số lượng để chọn tổ hợp khác.</div>`}
 function renderList(){const r=filtered();$('#count').textContent=`Đang hiển thị ${Math.min(st.n,r.length)} / ${r.length} căn`;
   $('#list').innerHTML=r.slice(0,st.n).map(card).join('')||emptyMsg();$('#more').hidden=r.length<=st.n;cheap()}
@@ -317,7 +321,7 @@ function calc(){
 }
 const PLAN={M:'plan_M_typical',P:'plan_P_typical'};
 function locHtml(u){const L=u.loc;const plan=u.t==='P'&&u.f==='05'?'plan_P_floor5':PLAN[u.t];
- return `<div class="loc">${L?`<figure><div class="pin"><img src="../img/chican/${L[2]}.webp" alt="Vị trí căn ${u.c} trên phối cảnh"><i class="dot" style="left:${L[0]*100}%;top:${L[1]*100}%"></i></div><figcaption>Chấm đỏ: vị trí tương đối của căn ${u.c} (tầng ${u.f}) trên phối cảnh.</figcaption></figure>`:''}
+ return `<div class="loc">${u.x?`<figure><a href="../img/quy/${u.c.toLowerCase()}.webp" target="_blank" rel="noopener"><img src="../img/quy/${u.c.toLowerCase()}.webp" alt="Chỉ căn ${u.c}"></a><figcaption>Ảnh chỉ căn ${u.c} (quỹ độc quyền). Bấm để phóng to, nhấn giữ để lưu gửi khách.</figcaption></figure>`:''}${L?`<figure><div class="pin"><img src="../img/chican/${L[2]}.webp" alt="Vị trí căn ${u.c} trên phối cảnh"><i class="dot" style="left:${L[0]*100}%;top:${L[1]*100}%"></i></div><figcaption>Chấm đỏ: vị trí tương đối của căn ${u.c} (tầng ${u.f}) trên phối cảnh.</figcaption></figure>`:''}
  <figure><a href="../img/chican/${plan}.webp" target="_blank" rel="noopener"><img src="../img/chican/${plan}.webp" alt="Mặt bằng tòa ${u.t}" loading="lazy"></a><figcaption>Mặt bằng ${u.t==='P'&&u.f==='05'?'tầng 5':'tầng điển hình'} tòa ${u.t}: tìm nhãn ${u.c.replace(/-\w+-/,'-'+(u.t==='P'&&u.f==='05'?'05':'xx')+'-')} trên mặt bằng. Bấm để phóng to.</figcaption></figure></div>`}
 const VIDS={studio:['Studio','../video/can-mau-studio.mp4','../video/can-mau-studio.jpg','52 giây'],'2pn':['2 phòng ngủ','../video/can-mau-2pn.mp4','../video/can-mau-2pn.jpg','25 giây']};
 const vidKey=k=>k==='2PN'?'2pn':(k==='Studio'||k==='Studio+')?'studio':null;
@@ -357,7 +361,7 @@ async function boot(){
   const n=new Date();$('#d0').value=new Date(n-n.getTimezoneOffset()*6e4).toISOString().slice(0,10);
   DB=await (await fetch('../data/units.json',{cache:'no-cache'})).json();U=DB.units;
   $('#codes').innerHTML=U.map(u=>`<option value="${u.c}">`).join('');
-  kpis();filters();renderList();
+  kpis();filters();renderList();addX();
   const c=new URLSearchParams(location.search).get('c');if(c)openUnit(c.toUpperCase());
 }
 boot();
